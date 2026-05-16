@@ -50,7 +50,7 @@ const uploadImgBtn       = document.getElementById('upload-profile-img-btn');
 let editingId = null;
 let statusTimeout = null;
 let autoSaveTimeout = null;
-let currentProfile = { name: 'Mi Espacio', icon: '📝' };
+let currentProfile = { name: 'Mi Espacio', icon: 'yoshi' };
 
 // ─── Emojis disponibles ───
 const EMOJI_LIST = [
@@ -540,17 +540,23 @@ async function initLocalProfile() {
 function updateProfileUI() {
   const profileCard = document.querySelector('.local-profile-card');
   const renderIcon = (el, icon) => {
-    if (icon && icon.startsWith('data:image')) {
-      el.textContent = '';
+    el.innerHTML = '';
+    if (icon === 'yoshi') {
+      el.innerHTML = `<svg class="yoshi-svg"><use href="#icon-yoshi-profile"></use></svg>`;
+    } else if (icon && icon.startsWith('data:image')) {
       const img = document.createElement('img');
       img.src = icon;
       img.style.width = '100%';
       img.style.height = '100%';
-      img.style.objectFit = 'contain';
+      img.style.objectFit = 'cover';
       img.style.display = 'block';
+      img.style.borderRadius = '12px';
       el.appendChild(img);
     } else {
-      el.textContent = icon || '📝';
+      const span = document.createElement('span');
+      span.style.fontSize = '2.5rem';
+      span.textContent = icon || '📝';
+      el.appendChild(span);
     }
   };
   

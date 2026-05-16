@@ -32,7 +32,7 @@ export async function saveNotes(notes) {
  */
 export async function getLocalProfile() {
   const { [PROFILE_KEY]: profile } = await browserAPI.storage.local.get({
-    [PROFILE_KEY]: { name: 'Mi Espacio', icon: '📝' }
+    [PROFILE_KEY]: { name: 'Mi Espacio', icon: 'yoshi' }
   });
   return profile;
 }
