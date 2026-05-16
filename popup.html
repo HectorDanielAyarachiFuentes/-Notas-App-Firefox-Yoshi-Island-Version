@@ -104,32 +104,6 @@
                                 <input type="file" id="profile-img-input" accept="image/*" style="display: none;">
                             </div>
                         </div>
-
-                        <div class="settings-group" style="background: rgba(255,255,255,0.5); border: 3px dashed var(--color-stitch); border-radius: 20px; padding: 15px;">
-                            <div style="margin-bottom: 15px;">
-                                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Tema Visual</label>
-                                <select id="theme-selector" style="width: 100%; padding: 8px; border: 2px solid var(--color-border-main); border-radius: 10px;">
-                                    <option value="system">Sistema</option>
-                                    <option value="light">Claro (Papel)</option>
-                                    <option value="dark">Oscuro (Noche)</option>
-                                </select>
-                            </div>
-                            
-                            <div style="margin-bottom: 15px;">
-                                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Modo OCR</label>
-                                <select id="psm-selector" style="width: 100%; padding: 8px; border: 2px solid var(--color-border-main); border-radius: 10px;">
-                                    <option value="3">✨ Inteligente (IA)</option>
-                                    <option value="6">Básico (Local)</option>
-                                </select>
-                            </div>
-
-                            <div style="display: flex; gap: 10px;">
-                                <button id="profile-export-btn" style="flex: 1; padding: 10px; background: var(--color-btn-blue); border: 3px solid var(--color-border-main); border-radius: 15px; cursor: pointer; font-weight: bold; box-shadow: 2px 2px 0 var(--color-border-main);">Exportar</button>
-                                <button id="profile-import-btn" style="flex: 1; padding: 10px; background: var(--color-btn-orange); border: 3px solid var(--color-border-main); border-radius: 15px; cursor: pointer; font-weight: bold; box-shadow: 2px 2px 0 var(--color-border-main);">Importar</button>
-                            </div>
-                            
-                            <button id="deleteAllBtn" style="width: 100%; margin-top: 15px; padding: 10px; background: #ff7675; border: 3px solid var(--color-border-main); border-radius: 15px; cursor: pointer; font-weight: bold; color: #fff; box-shadow: 2px 2px 0 var(--color-border-main);">BORRAR TODO</button>
-                        </div>
                     </div>
                 </section>
             </main>
@@ -143,6 +117,42 @@
                     <button id="settings-btn" class="btn-icon" title="Ajustes">
                         <svg class="yoshi-svg small"><use href="#icon-settings"></use></svg>
                     </button>
+
+                    <!-- Menú Desplegable de Ajustes (Faltaba en el HTML) -->
+                    <div id="settings-dropdown" class="settings-dropdown" style="display: none;">
+                        <h3 class="dropdown-title">Ajustes</h3>
+                        <div class="settings-group-inner">
+                            <div class="setting-item">
+                                <label>Tema Visual</label>
+                                <select id="theme-selector">
+                                    <option value="system">Sistema</option>
+                                    <option value="light">Claro (Papel)</option>
+                                    <option value="dark">Oscuro (Noche)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <label>Modo OCR</label>
+                                <select id="psm-selector">
+                                    <option value="3">✨ Inteligente (IA)</option>
+                                    <option value="6">Básico (Local)</option>
+                                </select>
+                            </div>
+
+                            <div class="data-actions">
+                                <button id="profile-export-btn" title="Exportar Notas">
+                                    <svg class="yoshi-svg small"><use href="#icon-export"></use></svg>
+                                    <span>Exportar</span>
+                                </button>
+                                <button id="profile-import-btn" title="Importar Notas">
+                                    <svg class="yoshi-svg small"><use href="#icon-import"></use></svg>
+                                    <span>Importar</span>
+                                </button>
+                            </div>
+                            
+                            <button id="deleteAllBtn" class="delete-all-btn">BORRAR TODO</button>
+                        </div>
+                    </div>
                 </div>
                 
                 <nav class="tabs-navigation">

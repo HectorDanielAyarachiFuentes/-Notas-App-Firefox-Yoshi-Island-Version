@@ -672,3 +672,144 @@ svg.hidden {
     }
 }
 
+/* --- Dropdown de Ajustes --- */
+.settings-dropdown {
+    position: absolute;
+    right: 100px;
+    top: 40px;
+    width: 260px;
+    background-color: var(--color-paper);
+    background-image: url('https://www.transparenttextures.com/patterns/kraft-paper.png');
+    border: 5px solid var(--color-border-main);
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    z-index: 2000;
+    filter: url(#hand-drawn-soft);
+    animation: slideInLeft 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(20px) scale(0.8); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.settings-dropdown::after {
+    content: '';
+    position: absolute;
+    top: 25px;
+    right: -18px;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 18px solid var(--color-border-main);
+}
+
+.dropdown-title {
+    font-family: var(--font-title);
+    font-size: 1.8rem;
+    color: #8d5d36;
+    text-align: center;
+    margin-bottom: 15px;
+    border-bottom: 3px dashed var(--color-stitch);
+    padding-bottom: 5px;
+}
+
+.settings-group-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.setting-item {
+    margin-bottom: 10px;
+}
+
+.setting-item label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--color-border-main);
+    font-size: 1.1rem;
+}
+
+.setting-item select {
+    width: 100%;
+    padding: 10px;
+    border: 3px solid var(--color-border-main);
+    border-radius: 12px;
+    font-family: var(--font-main);
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+}
+
+.data-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.data-actions button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 5px;
+    background: #fff;
+    border: 3px solid var(--color-border-main);
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: var(--font-title);
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    box-shadow: 2px 2px 0 var(--color-border-main);
+}
+
+.data-actions button:hover {
+    transform: translateY(-2px);
+    background: var(--color-paper);
+}
+
+.data-actions button .yoshi-svg {
+    width: 30px;
+    height: 30px;
+}
+
+.delete-all-btn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    background: #ff7675;
+    border: 4px solid var(--color-border-main);
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: var(--font-title);
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.1rem;
+    box-shadow: 3px 3px 0 var(--color-border-main);
+    transition: all 0.2s;
+}
+
+.delete-all-btn:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+}
+
+.delete-all-btn:active {
+    transform: translateY(2px);
+    box-shadow: 1px 1px 0 var(--color-border-main);
+}
+
+/* Ajustes para Sidebar en modo Tab */
+@media (min-width: 800px) {
+    .settings-dropdown {
+        right: 140px;
+        top: 60px;
+        width: 300px;
+    }
+}
+
