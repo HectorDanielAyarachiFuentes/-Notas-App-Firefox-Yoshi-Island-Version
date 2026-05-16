@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloc de Notas Yoshi Style | Creatividad al Máximo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Fondo Dinámico con Nubes -->
+    <div class="dynamic-background">
+        <div class="floating-cloud" style="top: 10%; left: -100px; animation-duration: 25s;">☁️</div>
+        <div class="floating-cloud" style="top: 30%; left: -150px; animation-duration: 35s;">☁️</div>
+        <div class="floating-cloud" style="top: 60%; left: -80px; animation-duration: 30s;">☁️</div>
+        <div class="floating-cloud" style="top: 80%; left: -200px; animation-duration: 40s;">☁️</div>
+    </div>
+
+    <div class="app-interface">
+        
+        <main class="notebook-panel">
+            
+            <header class="notebook-header">
+                <h1 class="dynamic-app-title">Notas app <small>v2.1 Pro</small></h1>
+                <div class="cloud-icon" style="font-size: 2rem; margin-bottom: 10px;">☁️</div>
+            </header>
+
+            <div class="input-group title-box">
+                <input type="text" id="note-title" spellcheck="false">
+            </div>
+
+            <div class="input-group body-box">
+                <textarea id="note-body" spellcheck="false"></textarea>
+                <div class="page-indicator">0</div>
+            </div>
+
+            <footer class="notebook-actions">
+                <button id="btn-save" class="btn-block btn-blue">
+                    <span class="btn-icon"></span>
+                    <span class="dynamic-btn-guardar-label">Guardar nota</span>
+                </button>
+                <button id="btn-clear" class="btn-block btn-orange">
+                    <span class="btn-icon"></span>
+                    <span class="dynamic-btn-limpiar-label">Limpiar</span>
+                </button>
+                <button id="btn-ia" class="btn-block btn-purple">
+                    <span class="btn-icon"></span>
+                    <span class="dynamic-btn-ocr-label">OCR</span>
+                </button>
+            </footer>
+        </main>
+
+        <aside class="sidebar-menu">
+            <div class="tool-buttons">
+                <button class="tool-btn btn-heart">❤️</button>
+                <button class="tool-btn btn-layout">🔲</button>
+                <button class="tool-btn btn-settings">⚙️</button>
+            </div>
+            
+            <nav class="navigation-links">
+                <a href="#" class="nav-item active" id="nav-new">
+                    <div class="nav-icon-container">✏️</div>
+                    <span class="dynamic-menu-item-nueva-label">Nueva</span>
+                </a>
+                <a href="#" class="nav-item" id="nav-list">
+                    <div class="nav-icon-container">📄</div>
+                    <span class="dynamic-menu-item-perfil-label">Notas</span>
+                </a>
+                <a href="#" class="nav-item" id="nav-profile">
+                    <div class="nav-icon-container">👤</div>
+                    <span class="dynamic-menu-item-user-label">Perfil</span>
+                </a>
+            </nav>
+        </aside>
+        
+    </div>
+
+    <!-- Contenedor para la lista de notas (inicialmente oculto) -->
+    <div id="notes-list-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2></h2>
+                <button id="close-modal">✖</button>
+            </header>
+            <div id="notes-container" class="notes-grid">
+                <!-- Las notas se cargarán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Diccionario de Iconos SVG Impresionantes Estilo Yoshi -->
+    <svg style="display: none;">
+        <!-- NUBE: Más orgánica -->
+        <symbol id="icon-cloud" viewBox="0 0 100 100">
+            <path d="M20,60 C20,40 40,35 50,45 C60,30 85,35 85,60 C95,60 95,80 75,80 L25,80 C10,80 10,60 20,60 Z" fill="#fff" stroke="#3e2723" stroke-width="5" />
+            <path d="M30,65 Q45,55 60,65" fill="none" stroke="#87ceeb" stroke-width="3" stroke-linecap="round" />
+        </symbol>
+        
+        <!-- PLUMERO: Más detallado -->
+        <symbol id="icon-duster" viewBox="0 0 100 100">
+            <path d="M20,80 L40,60" stroke="#5d4037" stroke-width="10" stroke-linecap="round" />
+            <path d="M35,65 Q55,20 85,35 Q95,50 80,75 Q65,95 40,70 Z" fill="#ffeb3b" stroke="#3e2723" stroke-width="5" />
+            <path d="M50,45 Q70,35 85,50" fill="none" stroke="#f48fb1" stroke-width="4" stroke-linecap="round" />
+        </symbol>
+
+        <!-- CEREBRO: Estilo Cartoon -->
+        <symbol id="icon-brain" viewBox="0 0 100 100">
+            <path d="M25,55 Q15,30 50,25 Q85,30 75,55 Q90,75 50,85 Q10,75 25,55" fill="#ffc1e3" stroke="#3e2723" stroke-width="5" />
+            <path d="M40,40 Q50,35 60,40 M30,55 Q50,50 70,55" fill="none" stroke="#ad1457" stroke-width="3" opacity="0.4" />
+        </symbol>
+
+        <!-- LÁPIZ: Estilo Yoshi's Island -->
+        <symbol id="icon-pencil-draw" viewBox="0 0 100 100">
+            <path d="M20,80 L30,70 L80,20 L90,30 L40,80 Z" fill="#ffb74d" stroke="#3e2723" stroke-width="5" />
+            <path d="M20,80 L25,75 L30,80 Z" fill="#3e2723" />
+            <path d="M80,20 L90,30" stroke="#3e2723" stroke-width="3" />
+        </symbol>
+
+        <!-- DOCUMENTO -->
+        <symbol id="icon-file-draw" viewBox="0 0 100 100">
+            <path d="M25,15 L65,15 L75,25 L75,85 L25,85 Z" fill="#fff" stroke="#3e2723" stroke-width="5" />
+            <path d="M35,40 H65 M35,55 H65 M35,70 H55" stroke="#64b5f6" stroke-width="6" stroke-linecap="round" />
+        </symbol>
+
+        <!-- YOSHI PERFIL: Más parecido a la imagen -->
+        <symbol id="icon-yoshi-profile" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="#a5d6a7" stroke="#3e2723" stroke-width="5" />
+            <circle cx="35" cy="40" r="5" fill="#3e2723" />
+            <circle cx="65" cy="40" r="5" fill="#3e2723" />
+            <path d="M40,65 Q50,75 60,65" fill="none" stroke="#3e2723" stroke-width="4" stroke-linecap="round" />
+            <circle cx="70" cy="55" r="8" fill="#f48fb1" opacity="0.6" />
+        </symbol>
+    </svg>
+
+        <!-- CORAZÓN: Con brillo y sombra -->
+        <symbol id="icon-heart" viewBox="0 0 100 100">
+            <path d="M50,35 Q50,20 35,20 Q20,20 20,40 Q20,60 50,80 Q80,60 80,40 Q80,20 65,20 Q50,20 50,35" fill="#e53935" stroke="#3e2723" stroke-width="4" />
+            <path d="M30,35 Q35,30 40,35" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.7" />
+        </symbol>
+
+        <!-- LAYOUT: Con paneles de colores -->
+        <symbol id="icon-layout" viewBox="0 0 100 100">
+            <path d="M25,25 L75,25 L75,75 L25,75 Z" fill="#9575cd" stroke="#3e2723" stroke-width="4" />
+            <path d="M30,30 L48,48 M52,52 L70,70" stroke="#3e2723" stroke-width="2" opacity="0.3" />
+            <rect x="35" y="35" width="30" height="30" fill="#ffffff" opacity="0.3" stroke="#3e2723" stroke-width="2" />
+        </symbol>
+
+        <!-- AJUSTES: Un engranaje real -->
+        <symbol id="icon-settings" viewBox="0 0 100 100">
+            <path d="M50,30 A20,20 0 1,0 50,70 A20,20 0 1,0 50,30" fill="#90a4ae" stroke="#3e2723" stroke-width="4" />
+            <path d="M50,15 L50,25 M50,75 L50,85 M15,50 L25,50 M75,50 L85,50 M25,25 L35,35 M65,65 L75,75 M25,75 L35,65 M65,35 L75,25" stroke="#3e2723" stroke-width="8" stroke-linecap="round" />
+            <circle cx="50" cy="50" r="8" fill="#ffffff" stroke="#3e2723" stroke-width="2" />
+        </symbol>
+        <!-- EXPORTAR -->
+        <symbol id="icon-export" viewBox="0 0 100 100">
+            <path d="M50,20 L50,60 M35,35 L50,20 L65,35" fill="none" stroke="#3e2723" stroke-width="5" stroke-linecap="round" />
+            <path d="M25,70 L75,70" stroke="#3e2723" stroke-width="5" stroke-linecap="round" />
+        </symbol>
+        <!-- IMPORTAR -->
+        <symbol id="icon-import" viewBox="0 0 100 100">
+            <path d="M50,60 L50,20 M35,45 L50,60 L65,45" fill="none" stroke="#3e2723" stroke-width="5" stroke-linecap="round" />
+            <path d="M25,70 L75,70" stroke="#3e2723" stroke-width="5" stroke-linecap="round" />
+        </symbol>
+    </svg>
+
+    <!-- Modal de Ajustes -->
+    <div id="settings-modal" class="modal-overlay hidden">
+        <div class="modal-content settings-panel">
+            <div class="modal-header">
+                <h2 class="dynamic-settings-title">AJUSTES</h2>
+                <button id="close-settings" class="close-btn">&times;</button>
+            </div>
+            
+            <div class="settings-body">
+                <div class="setting-item">
+                    <label>Tema Visual</label>
+                    <select class="yoshi-select">
+                        <option>Sistema</option>
+                        <option>Claro (Papel)</option>
+                        <option>Oscuro (Noche)</option>
+                    </select>
+                </div>
+                
+                <div class="setting-item">
+                    <label>Modo OCR</label>
+                    <select class="yoshi-select">
+                        <option>✨ Inteligente (IA)</option>
+                        <option>Básico (Local)</option>
+                    </select>
+                </div>
+                
+                <div class="guide-link">
+                    <a href="#">❓ Ver Guía de Uso</a>
+                </div>
+                
+                <h3 class="section-title">GESTIÓN DE DATOS</h3>
+                
+                <div class="data-actions">
+                    <button class="btn-block btn-blue">
+                        <div class="btn-icon"><svg class="yoshi-svg small-svg"><use href="#icon-export"></use></svg></div>
+                        <span>Exportar</span>
+                    </button>
+                    <button class="btn-block btn-orange">
+                        <div class="btn-icon"><svg class="yoshi-svg small-svg"><use href="#icon-import"></use></svg></div>
+                        <span>Importar</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="settings-footer">
+                <img src="https://raw.githubusercontent.com/Aris-Tottle/Yoshi-Island-Assets/main/yoshi_egg.png" alt="Yoshi Footer" class="footer-character">
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros SVG para efecto de dibujo a mano -->
+    <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+        <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+        </filter>
+        <filter id="pencil-texture">
+            <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="5" result="noise" />
+            <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="2" result="diffuse">
+                <feDistantLight azimuth="45" elevation="45" />
+            </feDiffuseLighting>
+            <feComposite operator="in" in="SourceGraphic" in2="diffuse" />
+        </filter>
+    </svg>
+
+    <script src="app.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

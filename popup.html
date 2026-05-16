@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas Pro | Yoshi Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Fondo Dinámico con Nubes -->
+    <div class="dynamic-background">
+        <div class="floating-cloud" style="top: 10%; left: -100px; animation-duration: 25s;">☁️</div>
+        <div class="floating-cloud" style="top: 30%; left: -150px; animation-duration: 35s;">☁️</div>
+        <div class="floating-cloud" style="top: 60%; left: -80px; animation-duration: 30s;">☁️</div>
+        <div class="floating-cloud" style="top: 80%; left: -200px; animation-duration: 40s;">☁️</div>
+    </div>
+
+    <div class="container">
+        <div class="main-layout">
+            
+            <!-- Panel Principal (Cuaderno) -->
+            <main class="tab-content">
+                
+                <!-- ── PESTAÑA: Nueva Nota ── -->
+                <section id="tab-create" class="tab-panel active">
+                    <div class="editor">
+                        <header class="notebook-header">
+                            <h1 id="editor-title" class="dynamic-app-title">Nueva Nota</h1>
+                            <div class="cloud-icon" style="font-size: 1.5rem; margin-bottom: 3px;">☁️</div>
+                        </header>
+
+                        <div class="input-group title-box">
+                            <input id="title" type="text" placeholder="Título cautivador..." maxlength="100" spellcheck="false">
+                        </div>
+
+                        <div class="input-group body-box textarea-container">
+                            <textarea id="content" placeholder="Escribe algo increíble aquí..." spellcheck="false"></textarea>
+                            <div id="char-counter" class="char-counter">0 caracteres</div>
+                        </div>
+
+                        <footer class="editor-actions">
+                            <button id="saveBtn">
+                                <span class="btn-icon">
+                                    <svg class="yoshi-svg small"><use href="#icon-save"></use></svg>
+                                </span>
+                                <span>Guardar nota</span>
+                            </button>
+                            <button id="newBtn">
+                                <span class="btn-icon">
+                                    <svg class="yoshi-svg small"><use href="#icon-duster"></use></svg>
+                                </span>
+                                <span>Limpiar</span>
+                            </button>
+                            <button id="ocr-btn">
+                                <span class="btn-icon">
+                                    <svg class="yoshi-svg small"><use href="#icon-brain"></use></svg>
+                                </span>
+                                <span>OCR</span>
+                            </button>
+                        </footer>
+                    </div>
+                </section>
+
+                <!-- ── PESTAÑA: Listado ── -->
+                <section id="tab-history" class="tab-panel">
+                    <div class="history-container">
+                        <header class="history-header">
+                            <h2 class="dynamic-app-title" style="font-size: 2rem; margin-bottom: 10px;">Mis Notas</h2>
+                            <div class="input-group">
+                                <input type="text" id="search-input" placeholder="Buscar nota..." spellcheck="false">
+                            </div>
+                        </header>
+                        <ul id="notesList"></ul>
+                    </div>
+                </section>
+
+                <!-- ── PESTAÑA: Perfil/Ajustes ── -->
+                <section id="tab-sync" class="tab-panel">
+                    <div class="profile-container" style="overflow-y: auto; padding-right: 10px;">
+                        <h2 class="dynamic-app-title" style="font-size: 2rem; margin-bottom: 15px;">Mi Espacio</h2>
+                        
+                        <div class="local-profile-card" style="background: #fff; border: 4px solid var(--color-border-main); border-radius: 25px; padding: 20px; margin-bottom: 20px; box-shadow: 4px 4px 0 var(--color-border-main);">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                                <div id="local-icon-picker-trigger" class="btn-icon" style="width: 55px; height: 55px; padding: 5px;">
+                                    <svg id="local-header-icon" class="yoshi-svg"><use href="#icon-yoshi-profile"></use></svg>
+                                </div>
+                                <div>
+                                    <h3 id="local-profile-name" style="font-size: 1.3rem; color: #8d5d36;">Mi Espacio</h3>
+                                    <input id="local-name-input" type="text" style="display: none; padding: 5px; border: 2px solid var(--color-border-main); border-radius: 10px; font-family: inherit;">
+                                    <button id="edit-local-name-btn" style="background: none; border: none; color: #3498db; cursor: pointer; font-size: 0.9rem; font-weight: bold;">[Editar nombre]</button>
+                                </div>
+                            </div>
+                            
+                            <div id="emoji-picker" style="display: none; background: #fff; border: 3px solid var(--color-border-main); border-radius: 15px; padding: 10px; margin-top: 10px;">
+                                <div id="emoji-grid" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; max-height: 150px; overflow-y: auto;"></div>
+                                <button id="upload-profile-img-btn" style="width: 100%; margin-top: 10px; padding: 8px; background: #f0f0f0; border: 2px solid var(--color-border-main); border-radius: 10px; cursor: pointer;">Subir imagen</button>
+                                <input type="file" id="profile-img-input" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+
+                        <div class="settings-group" style="background: rgba(255,255,255,0.5); border: 3px dashed var(--color-stitch); border-radius: 20px; padding: 15px;">
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Tema Visual</label>
+                                <select id="theme-selector" style="width: 100%; padding: 8px; border: 2px solid var(--color-border-main); border-radius: 10px;">
+                                    <option value="system">Sistema</option>
+                                    <option value="light">Claro (Papel)</option>
+                                    <option value="dark">Oscuro (Noche)</option>
+                                </select>
+                            </div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Modo OCR</label>
+                                <select id="psm-selector" style="width: 100%; padding: 8px; border: 2px solid var(--color-border-main); border-radius: 10px;">
+                                    <option value="3">✨ Inteligente (IA)</option>
+                                    <option value="6">Básico (Local)</option>
+                                </select>
+                            </div>
+
+                            <div style="display: flex; gap: 10px;">
+                                <button id="profile-export-btn" style="flex: 1; padding: 10px; background: var(--color-btn-blue); border: 3px solid var(--color-border-main); border-radius: 15px; cursor: pointer; font-weight: bold; box-shadow: 2px 2px 0 var(--color-border-main);">Exportar</button>
+                                <button id="profile-import-btn" style="flex: 1; padding: 10px; background: var(--color-btn-orange); border: 3px solid var(--color-border-main); border-radius: 15px; cursor: pointer; font-weight: bold; box-shadow: 2px 2px 0 var(--color-border-main);">Importar</button>
+                            </div>
+                            
+                            <button id="deleteAllBtn" style="width: 100%; margin-top: 15px; padding: 10px; background: #ff7675; border: 3px solid var(--color-border-main); border-radius: 15px; cursor: pointer; font-weight: bold; color: #fff; box-shadow: 2px 2px 0 var(--color-border-main);">BORRAR TODO</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Sidebar Lateral -->
+            <aside class="sidebar">
+                <div class="sidebar-actions">
+                    <button id="pin-btn" class="btn-icon" title="Anclar">
+                        <svg class="yoshi-svg small"><use href="#icon-heart"></use></svg>
+                    </button>
+                    <button id="settings-btn" class="btn-icon" title="Ajustes">
+                        <svg class="yoshi-svg small"><use href="#icon-settings"></use></svg>
+                    </button>
+                </div>
+                
+                <nav class="tabs-navigation">
+                    <button class="tab-button active" data-tab="create">
+                        <div class="icon-container">
+                            <svg class="yoshi-svg"><use href="#icon-pencil-draw"></use></svg>
+                        </div>
+                        <span>Nueva</span>
+                    </button>
+                    <button class="tab-button" data-tab="history">
+                        <div class="icon-container">
+                            <svg class="yoshi-svg"><use href="#icon-file-draw"></use></svg>
+                        </div>
+                        <span>Notas</span>
+                    </button>
+                    <button class="tab-button" data-tab="sync">
+                        <div class="icon-container">
+                            <svg class="yoshi-svg"><use href="#icon-yoshi-profile"></use></svg>
+                        </div>
+                        <span>Perfil</span>
+                    </button>
+                </nav>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Elementos Ocultos y Modales -->
+    <input type="file" id="import-file-input" accept=".json" style="display: none;">
+    <div id="status" class="status"></div>
+
+    <!-- Diccionario de Iconos SVG Estilo Yoshi -->
+    <svg style="display: none;">
+        <symbol id="icon-cloud" viewBox="0 0 100 100">
+            <!-- Nube esponjosa y desigual -->
+            <path d="M20,65 C10,65 10,45 25,45 C25,25 55,20 65,40 C85,30 95,50 85,70 C85,85 20,85 20,65 Z" fill="#fff" stroke="#3e2723" stroke-width="5" />
+            <path d="M35,60 Q50,50 65,60" fill="none" stroke="#87ceeb" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+        </symbol>
+        <symbol id="icon-duster" viewBox="0 0 100 100">
+            <path d="M20,80 L40,60" stroke="#5d4037" stroke-width="10" stroke-linecap="round" />
+            <path d="M35,65 Q55,20 85,35 Q95,50 80,75 Q65,95 40,70 Z" fill="#ffeb3b" stroke="#3e2723" stroke-width="5" />
+            <path d="M50,45 Q70,35 85,50" fill="none" stroke="#f48fb1" stroke-width="4" stroke-linecap="round" />
+        </symbol>
+        <symbol id="icon-brain" viewBox="0 0 100 100">
+            <path d="M25,55 Q15,30 50,25 Q85,30 75,55 Q90,75 50,85 Q10,75 25,55" fill="#ffc1e3" stroke="#3e2723" stroke-width="5" />
+            <path d="M40,40 Q50,35 60,40 M30,55 Q50,50 70,55" fill="none" stroke="#ad1457" stroke-width="3" opacity="0.4" />
+        </symbol>
+        <symbol id="icon-pencil-draw" viewBox="0 0 100 100">
+            <!-- Lápiz que no es recto -->
+            <path d="M25,85 L35,65 L85,15 L95,25 L45,75 Z" fill="#ffb74d" stroke="#3e2723" stroke-width="5" />
+            <!-- Punta gorda -->
+            <path d="M25,85 L38,80 L30,68 Z" fill="#3e2723" />
+            <!-- Decoración de colores -->
+            <path d="M50,45 L70,25 M60,55 L80,35" stroke="#fff" stroke-width="3" opacity="0.6" />
+        </symbol>
+        <symbol id="icon-file-draw" viewBox="0 0 100 100">
+            <!-- Papel arrugado -->
+            <path d="M25,18 L60,15 L78,28 L72,88 L22,85 Z" fill="#fff" stroke="#3e2723" stroke-width="5" />
+            <path d="M35,45 L65,42 M35,60 L60,58 M35,75 L55,73" stroke="#64b5f6" stroke-width="5" stroke-linecap="round" />
+        </symbol>
+        <symbol id="icon-yoshi-profile" viewBox="0 0 100 100">
+            <!-- Cabeza amorfa -->
+            <path d="M50,15 C20,15 15,50 30,75 C40,90 70,90 85,65 C95,45 80,15 50,15 Z" fill="#a5d6a7" stroke="#3e2723" stroke-width="5" />
+            <!-- Ojos desiguales -->
+            <ellipse cx="40" cy="45" rx="6" ry="8" fill="#fff" stroke="#3e2723" stroke-width="2" />
+            <circle cx="41" cy="47" r="3" fill="#3e2723" />
+            <ellipse cx="65" cy="45" rx="7" ry="9" fill="#fff" stroke="#3e2723" stroke-width="2" />
+            <circle cx="66" cy="47" r="3.5" fill="#3e2723" />
+            <!-- Mejilla mal pintada -->
+            <circle cx="75" cy="65" r="12" fill="#f48fb1" opacity="0.5" />
+            <path d="M45,75 Q55,85 70,70" fill="none" stroke="#3e2723" stroke-width="4" stroke-linecap="round" />
+        </symbol>
+        <symbol id="icon-heart" viewBox="0 0 100 100">
+            <!-- Corazón chueco -->
+            <path d="M50,40 Q50,20 30,20 Q15,20 18,45 Q20,70 50,85 Q82,70 85,45 Q88,20 68,20 Q50,20 50,40" fill="#e53935" stroke="#3e2723" stroke-width="5" />
+            <path d="M35,35 Q40,30 45,35" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.7" />
+        </symbol>
+        <symbol id="icon-settings" viewBox="0 0 100 100">
+            <!-- Engranaje "tembloroso" -->
+            <path d="M50,35 A15,15 0 1,0 50,65 A15,15 0 1,0 50,35" fill="#90a4ae" stroke="#3e2723" stroke-width="5" />
+            <path d="M50,15 L48,28 M52,72 L50,85 M15,52 L28,50 M72,48 L85,50 M22,25 L35,38 M65,62 L78,75 M25,78 L38,65 M62,35 L75,22" stroke="#3e2723" stroke-width="7" stroke-linecap="round" />
+            <circle cx="50" cy="50" r="6" fill="#fff" stroke="#3e2723" stroke-width="2" />
+        </symbol>
+        <symbol id="icon-export" viewBox="0 0 100 100">
+            <path d="M50,20 L50,60 M35,35 L50,20 L65,35" fill="none" stroke="#3e2723" stroke-width="5" stroke-linecap="round" />
+            <path d="M25,70 L75,70" stroke="#3e2723" stroke-width="5" stroke-linecap="round" />
+        </symbol>
+        <symbol id="icon-import" viewBox="0 0 100 100">
+            <path d="M50,60 L50,20 M35,45 L50,60 L65,45" fill="none" stroke="#3e2723" stroke-width="5" stroke-linecap="round" />
+            <path d="M25,70 L75,70" stroke="#3e2723" stroke-width="5" stroke-linecap="round" />
+        </symbol>
+        <symbol id="icon-save" viewBox="0 0 100 100">
+            <rect x="20" y="20" width="60" height="60" rx="5" fill="#6fbef3" stroke="#3e2723" stroke-width="5"/>
+            <rect x="35" y="20" width="30" height="25" fill="#fff" stroke="#3e2723" stroke-width="3"/>
+            <rect x="30" y="55" width="40" height="25" fill="#fff" stroke="#3e2723" stroke-width="3"/>
+        </symbol>
+    </svg>
+
+    <!-- Filtros SVG para efecto de dibujo a mano -->
+    <svg class="hidden">
+        <!-- Filtro de Ondulación (Mueve las líneas) -->
+        <filter id="hand-drawn" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+        </filter>
+        <!-- Filtro de Textura de Crayón/Lápiz -->
+        <filter id="crayon-texture">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
+            <feColorMatrix type="saturate" values="0" />
+            <feComponentTransfer>
+                <feFuncA type="linear" slope="0.3" />
+            </feComponentTransfer>
+            <feComposite operator="in" in2="SourceGraphic" />
+        </filter>
+    </svg>
+
+    <script type="module" src="js/popup.js"></script>
+</body>
+</html>

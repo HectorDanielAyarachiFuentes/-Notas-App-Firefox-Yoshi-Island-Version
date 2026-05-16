@@ -1,0 +1,380 @@
+<div class="ocrext-element ocrext-wrapper yoshi-theme">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Handlee&family=Patrick+Hand&display=swap');
+
+        .yoshi-theme * {
+            box-sizing: border-box !important;
+        }
+
+        .yoshi-theme.ocrext-wrapper {
+            background-color: #d4ae83 !important;
+            background-image: url('https://www.transparenttextures.com/patterns/kraft-paper.png') !important;
+            border: 6px solid #3e2723 !important;
+            border-radius: 30px !important;
+            padding: 10px 10px 10px 10px !important;
+            font-family: 'Handlee', cursive !important;
+            filter: url(#hand-drawn-ocr) !important;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3) !important;
+            width: 680px !important;
+            max-width: 95vw !important;
+            height: auto !important;
+            min-height: auto !important;
+            max-height: 90vh !important;
+            position: fixed !important;
+            bottom: 10px !important;
+            right: 10px !important;
+            margin: 0 !important;
+            z-index: 999999999 !important;
+            overflow: hidden !important;
+        }
+
+        .yoshi-theme .ocrext-header {
+            background-color: #6fbef3 !important;
+            border-radius: 20px 20px 0 0 !important;
+            margin: -10px -10px 10px -10px !important;
+            padding: 0 15px !important;
+            height: 38px !important;
+            line-height: 38px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            border-bottom: 4px solid #3e2723 !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+
+        .yoshi-theme .ocrext-title-name {
+            font-family: 'Patrick Hand', cursive !important;
+            font-size: 1.3rem !important;
+            color: #fff !important;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3) !important;
+            margin: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            height: 100% !important;
+        }
+
+        .yoshi-theme .ocrext-canvas-container {
+            border: 4px solid #3e2723 !important;
+            border-radius: 15px !important;
+            overflow: auto !important;
+            background: #000 !important;
+            margin-bottom: 5px !important;
+            max-height: 180px !important;
+            display: flex !important;
+            justify-content: center !important;
+            width: 100% !important;
+            min-height: 60px !important;
+        }
+
+        .yoshi-theme #ocrext-can {
+            max-height: 100% !important;
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            image-rendering: auto !important;
+        }
+
+        .yoshi-theme .ocrext-ocr-output {
+            background-color: #f9f1e3 !important;
+            border: 3px solid #c4a484 !important;
+            border-radius: 15px !important;
+            padding: 5px !important;
+            margin-top: 5px !important;
+            overflow: hidden !important;
+            position: relative !important;
+            max-height: 125px !important; /* Reduced from 140px */
+            display: block !important;
+            transform: translateZ(0) !important; /* Force new layer to fix filter clipping issues */
+        }
+
+        .yoshi-theme .ocrext-grid {
+            display: flex !important;
+            width: 100% !important;
+            align-items: stretch !important;
+            height: 100% !important;
+        }
+
+        .yoshi-theme .ocrext-cell-small {
+            width: 25% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-right: 3px dashed #c4a484 !important;
+            padding-right: 10px !important;
+        }
+
+        .yoshi-theme .ocrext-cell-large {
+            width: 75% !important;
+            padding-left: 15px !important;
+            overflow: hidden !important; /* Added to ensure no leak */
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        .yoshi-theme .ocrext-label {
+            font-family: 'Patrick Hand', cursive !important;
+            font-size: 1.1rem !important;
+            color: #8d6e63 !important;
+            margin: 0 !important;
+            text-align: center !important;
+            line-height: 1.2 !important;
+        }
+
+        .yoshi-theme .ocrext-label span {
+            display: block !important;
+            font-size: 0.85rem !important;
+            opacity: 0.8 !important;
+            font-weight: normal !important;
+            margin-top: 2px !important;
+        }
+
+        .yoshi-theme .ocrext-result,
+        .yoshi-theme #popup_support_text {
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            font-family: 'Handlee', cursive !important;
+            font-size: 1rem !important;
+            color: #3e2723 !important;
+            width: 100% !important;
+            min-height: 35px !important;
+            height: 100px !important; /* Reduced from 120px */
+            max-height: 100px !important; /* Reduced from 120px */
+            overflow-y: auto !important;
+            resize: none !important;
+            padding: 5px !important;
+            margin: 0 !important;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            display: block !important;
+            position: relative !important;
+            z-index: 1 !important;
+            transform: translateZ(0) !important;
+        }
+
+        .yoshi-theme .ocrext-footer {
+            display: flex !important;
+            gap: 8px !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            margin-top: 5px !important;
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            position: relative !important;
+            z-index: 10 !important; /* Ensure footer stays above any leaking content */
+        }
+
+        .yoshi-theme .ocrext-btn {
+            box-sizing: border-box !important;
+            font-family: 'Patrick Hand', cursive !important;
+            font-weight: bold !important;
+            font-size: 1rem !important;
+            border: 3px solid #3e2723 !important;
+            border-radius: 12px !important;
+            padding: 0 12px !important;
+            height: 36px !important;
+            transition: all 0.2s !important;
+            filter: url(#hand-drawn-ocr) !important;
+            box-shadow: 2px 2px 0 #3e2723 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            cursor: pointer !important;
+            line-height: 1 !important;
+        }
+
+        .yoshi-theme .ocrext-btn:hover {
+            transform: scale(1.05) rotate(2deg) !important;
+        }
+
+        .yoshi-theme .ocrext-ocr-sendocr { background-color: #f5b041 !important; color: #3e2723 !important; }
+        .yoshi-theme .ocrext-ocr-recapture { background-color: #ff7675 !important; color: #fff !important; }
+        .yoshi-theme .ocrext-ocr-copy { background-color: #2ecc71 !important; color: #fff !important; }
+        
+        .yoshi-theme .ocrext-quickselect-btn-container .ocrext-btn,
+        .yoshi-theme .ocrext-engine-btn {
+            box-sizing: border-box !important;
+            background-color: #54a0ff !important;
+            color: #fff !important;
+            font-family: 'Patrick Hand', cursive !important;
+            font-weight: bold !important;
+            font-size: 0.95rem !important;
+            border: 3px solid #3e2723 !important;
+            border-radius: 12px !important;
+            padding: 0 10px !important;
+            height: 36px !important;
+            filter: url(#hand-drawn-ocr) !important;
+            box-shadow: 2px 2px 0 #3e2723 !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+            margin: 0 !important;
+        }
+
+        .yoshi-theme .translate-btn {
+            box-sizing: border-box !important;
+            width: 36px !important;
+            height: 36px !important;
+            background: #fff !important;
+            border: 3px solid #3e2723 !important;
+            border-radius: 12px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            filter: url(#hand-drawn-ocr) !important;
+            box-shadow: 2px 2px 0 #3e2723 !important;
+            transition: all 0.2s !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .yoshi-theme .ocrext-engine-panel {
+            background-color: #f9f1e3 !important;
+            background-image: url('https://www.transparenttextures.com/patterns/kraft-paper.png') !important;
+            border: 3px solid #3e2723 !important;
+            border-radius: 15px !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+            filter: url(#hand-drawn-ocr) !important;
+            padding: 5px !important;
+            z-index: 1000 !important;
+        }
+
+        .yoshi-theme .ocrext-engine-panel .ocrext-engine-option {
+            font-family: 'Patrick Hand', cursive !important;
+            padding: 8px 12px !important;
+            color: #3e2723 !important;
+            cursor: pointer !important;
+            border-radius: 8px !important;
+            transition: background 0.2s !important;
+        }
+
+        .yoshi-theme .ocrext-engine-panel .ocrext-engine-option:hover {
+            background-color: rgba(62, 39, 35, 0.1) !important;
+        }
+
+        .yoshi-theme .ocrext-engine-panel .ocrext-engine-option.ocrext-active {
+            background-color: #54a0ff !important;
+            color: #fff !important;
+        }
+
+        .yoshi-theme .yoshi-svg-ocr {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* Estilo para el mensaje de selección "Por favor, selecciona..." */
+        .ocrext-mask p.ocrext-element {
+            font-family: 'Patrick Hand', cursive !important;
+            font-size: 2.5rem !important;
+            color: #fff !important;
+            text-shadow: 3px 3px 0 #3e2723, -1px -1px 0 #3e2723, 1px -1px 0 #3e2723, -1px 1px 0 #3e2723, 1px 1px 0 #3e2723 !important;
+            background: rgba(212, 174, 131, 0.9) !important;
+            padding: 15px 30px !important;
+            border: 4px solid #3e2723 !important;
+            border-radius: 20px !important;
+            filter: url(#hand-drawn-ocr) !important;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4) !important;
+        }
+    </style>
+
+    <svg style="position: absolute; width: 0; height: 0;">
+        <filter id="hand-drawn-ocr" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+        </filter>
+        <symbol id="icon-repeat-draw" viewBox="0 0 100 100">
+            <path d="M20,50 A30,30 0 1,1 80,50 M80,30 L80,50 L60,50" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" />
+        </symbol>
+        <symbol id="icon-camera-draw" viewBox="0 0 100 100">
+            <path d="M15,35 L30,25 L70,25 L85,35 L85,75 L15,75 Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+            <circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" stroke-width="6" />
+        </symbol>
+        <symbol id="icon-copy-draw" viewBox="0 0 100 100">
+            <path d="M30,20 H70 L80,30 V85 H30 Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+            <path d="M40,45 H60 M40,60 H60" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+        </symbol>
+        <symbol id="icon-translate-draw" viewBox="0 0 100 100">
+            <path d="M20,30 H50 M35,20 V30 Q35,60 15,70 M25,45 Q40,45 50,70" stroke="currentColor" stroke-width="7" stroke-linecap="round" fill="none" />
+            <path d="M60,80 L75,40 L90,80 M65,70 H85" stroke="currentColor" stroke-width="7" stroke-linecap="round" fill="none" />
+        </symbol>
+        <symbol id="icon-globe-draw" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="6" fill="none" />
+            <path d="M15,50 H85 M50,15 Q30,50 50,85 Q70,50 50,15" stroke="currentColor" stroke-width="6" fill="none" />
+        </symbol>
+    </svg>
+
+    <header class="ocrext-element ocrext-header"> 
+        <span class="ocrext-element ocrext-title"> 
+            <span class="ocrext-title-name">Notas Pro OCR Pro</span>
+            <span class="ocrext-header-status" style="font-size: 0.8rem; margin-left: 10px; opacity: 0.8; color: #fff;"></span>
+        </span>
+        <div style="display: flex; align-items: center; gap: 12px; padding-right: 5px;">
+            <a id="copyfish-open-tab-link" href="javascript:void(0)" class="ocrext-open-tab-link" title="Abrir en pestaña" style="color: #fff; opacity: 0.8; text-decoration: none; display: flex; align-items: center;">
+                <svg style="width: 20px; height: 20px; fill: currentColor;"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            </a>
+            <a id="copyfish-settings-link" href="javascript:void(0)" class="ocrext-settings-link" title="Ajustes" style="color: #fff; opacity: 0.8; text-decoration: none; display: flex; align-items: center;">
+                <svg style="width: 20px; height: 20px; fill: currentColor;"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+            </a>
+            <a id="copyfish-close-button" href="javascript:void(0)" class="ocrext-close-link ocrext-closeToolbar-link" style="color: #fff; text-decoration: none; font-size: 1.8rem; line-height: 1; display: flex; align-items: center; margin-top: -3px;">×</a>
+        </div>
+    </header>
+
+    <div class="ocrext-element ocrext-content ocrext-clearfix">
+        <div class="ocrext-element ocrext-canvas-container"> 
+            <canvas id="ocrext-can" class="ocrext-element" width=480 height=320></canvas>
+            <!-- Canvas oculto necesario para el procesamiento interno del motor OCR -->
+            <canvas id="ocrext-canOrig" class="ocrext-element" width=480 height=320 style="display:none;"></canvas>
+        </div>
+
+        <div class="ocrext-element ocrext-ocr-output">
+            <div class="ocrext-element ocrext-grid">
+                <div class="ocrext-element ocrext-cell ocrext-cell-small">
+                    <h5 class="ocrext-element ocrext-label ocrext-message">Resultado OCR <span></span></h5>
+                </div>
+                <div class="ocrext-element ocrext-cell ocrext-cell-large">
+                    <textarea class="ocrext-element ocrext-ocr-message ocrext-result" spellcheck="false">N/A</textarea> 
+                </div>
+            </div>
+        </div>
+
+        <div class="ocrext-element ocrext-footer">
+            <div class="ocrext-element ocrext-quickselect-btn-container"> 
+                <div class="ocrext-element ocrext-engine-btn">OCR Local (Fast) <span class="ocrext-engine-btn-arrow"></span></div>
+            </div>
+            
+            <div class="ocrext-element ocrext-btn-container"> 
+                <button class="ocrext-element ocrext-ocr-sendocr ocrext-btn" title="Repetir">
+                    <svg class="yoshi-svg-ocr"><use href="#icon-repeat-draw"></use></svg>
+                    <span>Repetir</span>
+                </button> 
+                <button class="ocrext-element ocrext-ocr-recapture ocrext-btn" title="Recapturar">
+                    <svg class="yoshi-svg-ocr"><use href="#icon-camera-draw"></use></svg>
+                    <span>Recapturar</span>
+                </button> 
+                <button class="ocrext-element ocrext-ocr-copy ocrext-btn" title="Copiar">
+                    <svg class="yoshi-svg-ocr"><use href="#icon-copy-draw"></use></svg>
+                    <span>Copiar</span>
+                </button>
+
+                <!-- Botones de traducción integrados con img oculta para el JS -->
+                <div class="ocrext-element translate-button translate-btn" id="deepl_translate_button" title="DeepL">
+                    <img style="display:none;" src="">
+                    <svg class="yoshi-svg-ocr" style="color: #002d4b;"><use href="#icon-translate-draw"></use></svg>
+                </div>
+                <div class="ocrext-element translate-button translate-btn" id="popup_translate_button" title="Translate">
+                    <img style="display:none;" src="">
+                    <svg class="yoshi-svg-ocr" style="color: #4285f4;"><use href="#icon-globe-draw"></use></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
