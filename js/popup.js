@@ -46,6 +46,8 @@ const localHeaderIcon    = document.getElementById('local-header-icon');
 const localHeaderName    = document.getElementById('local-header-name');
 const profileImgInput    = document.getElementById('profile-img-input');
 const uploadImgBtn       = document.getElementById('upload-profile-img-btn');
+const sidebarUserName    = document.getElementById('sidebar-user-name');
+const sidebarUserIcon    = document.getElementById('sidebar-user-icon');
 
 let editingId = null;
 let statusTimeout = null;
@@ -552,10 +554,12 @@ function updateProfileUI() {
     }
   };
   
-  // Renderizar en el header
+  // Renderizar en el header y sidebar
   renderIcon(localHeaderIcon, currentProfile.icon);
+  renderIcon(sidebarUserIcon, currentProfile.icon);
   localHeaderName.textContent = currentProfile.name;
   localProfileName.textContent = currentProfile.name;
+  sidebarUserName.textContent = currentProfile.name;
 
   // Aplicar fondo a la tarjeta completa si es imagen
   if (profileCard) {
