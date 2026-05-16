@@ -10,7 +10,7 @@
         "openGrabbingScreenHotkey": 49,
         "closePanelHotkey": 50,
         "copyTextHotkey": 51,
-        "ocrEngine": "OcrLocal",
+        "ocrEngine": "OcrLocalBest",
         "copyType": "Text",
         "transitionEngine": false,
         "status": "Pro",
