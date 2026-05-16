@@ -55,7 +55,13 @@ let statusTimeout = null;
 let autoSaveTimeout = null;
 let currentProfile = { name: 'Mi Espacio', icon: 'yoshi' };
 
-// ─── Emojis disponibles ───
+// ─── Iconos y Emojis disponibles ───
+const SVG_ICONS = [
+  'icon-yoshi-profile', 'icon-flower', 'icon-star', 'icon-berry', 
+  'icon-save', 'icon-heart', 'icon-brain', 'icon-pencil-draw',
+  'icon-file-draw', 'icon-cloud', 'icon-trash', 'icon-settings'
+];
+
 const EMOJI_LIST = [
   '📝','📓','📔','📒','📕','📗','📘','📙',
   '🗒️','📋','📄','📃','🗂️','🗃️','📁','🗄️',
@@ -536,8 +542,25 @@ async function initLocalProfile() {
   currentProfile = await getLocalProfile();
   updateProfileUI();
   
-  // Renderizar grid de emojis
+  // Renderizar grid de iconos y emojis
   emojiGrid.textContent = '';
+  
+  // 1. Renderizar SVGs (Estilo Yoshi)
+  SVG_ICONS.forEach(iconId => {
+    const div = document.createElement('div');
+    div.className = 'emoji-item';
+    div.title = iconId.replace('icon-', '').replace('-', ' ');
+    div.innerHTML = `<svg class="yoshi-svg" style="width: 35px; height: 35px; pointer-events: none;"><use href="#${iconId}"></use></svg>`;
+    div.addEventListener('click', async () => {
+      currentProfile.icon = `svg:${iconId}`;
+      await saveLocalProfile(currentProfile);
+      updateProfileUI();
+      emojiPicker.style.display = 'none';
+    });
+    emojiGrid.appendChild(div);
+  });
+
+  // 2. Renderizar Emojis (Estándar)
   EMOJI_LIST.forEach(emoji => {
     const span = document.createElement('span');
     span.textContent = emoji;
@@ -556,8 +579,9 @@ function updateProfileUI() {
   const profileCard = document.querySelector('.local-profile-card');
   const renderIcon = (el, icon) => {
     el.innerHTML = '';
-    if (icon === 'yoshi') {
-      el.innerHTML = `<svg class="yoshi-svg"><use href="#icon-yoshi-profile"></use></svg>`;
+    if (icon === 'yoshi' || (icon && icon.startsWith('svg:'))) {
+      const id = (icon === 'yoshi') ? 'icon-yoshi-profile' : icon.split(':')[1];
+      el.innerHTML = `<svg class="yoshi-svg"><use href="#${id}"></use></svg>`;
     } else if (icon && icon.startsWith('data:image')) {
       const img = document.createElement('img');
       img.src = icon;
