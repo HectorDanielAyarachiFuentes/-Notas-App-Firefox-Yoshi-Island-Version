@@ -112,21 +112,32 @@ function clearEditor() {
 }
 
 function renderNotes() {
-    elements.notesContainer.innerHTML = "";
+    elements.notesContainer.textContent = "";
     
     if (notes.length === 0) {
-        elements.notesContainer.innerHTML = `<p style='grid-column: 1/-1; text-align: center;'>¡No hay misiones guardadas!</p>`;
+        const p = document.createElement('p');
+        p.style.gridColumn = "1/-1";
+        p.style.textAlign = "center";
+        p.textContent = "¡No hay misiones guardadas!";
+        elements.notesContainer.appendChild(p);
         return;
     }
 
     notes.forEach(note => {
         const card = document.createElement('div');
         card.className = 'note-card';
-        card.innerHTML = `
-            <h3>${note.title}</h3>
-            <p>${note.body}</p>
-            <small style="font-size: 0.7rem; color: #999;">${note.date}</small>
-        `;
+        const h3 = document.createElement('h3');
+        h3.textContent = note.title;
+        const p = document.createElement('p');
+        p.textContent = note.body;
+        const small = document.createElement('small');
+        small.style.fontSize = "0.7rem";
+        small.style.color = "#999";
+        small.textContent = note.date;
+        
+        card.appendChild(h3);
+        card.appendChild(p);
+        card.appendChild(small);
         card.onclick = () => loadNote(note);
         elements.notesContainer.appendChild(card);
     });

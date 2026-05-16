@@ -55,6 +55,21 @@ let statusTimeout = null;
 let autoSaveTimeout = null;
 let currentProfile = { name: 'Mi Espacio', icon: 'yoshi' };
 
+// Helper para crear SVGs de forma segura
+function createYoshiSVG(iconId, width = '100%', height = '100%') {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "yoshi-svg");
+  svg.style.width = width;
+  svg.style.height = height;
+  
+  const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+  use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", `#${iconId}`);
+  use.setAttribute("href", `#${iconId}`);
+  
+  svg.appendChild(use);
+  return svg;
+}
+
 // ─── Iconos y Emojis disponibles ───
 const SVG_ICONS = [
   'icon-yoshi-profile', 'icon-flower', 'icon-star', 'icon-berry', 
@@ -139,7 +154,7 @@ function createNoteListItem(note) {
   const openBtn = document.createElement('button');
   openBtn.className = 'btn-icon';
   openBtn.title = 'Editar nota';
-  openBtn.innerHTML = `<svg class="yoshi-svg small"><use href="#icon-pencil-draw"></use></svg>`;
+  openBtn.appendChild(createYoshiSVG('icon-pencil-draw'));
   openBtn.addEventListener('click', (e) => {
     e.stopPropagation(); 
     openNoteForEditing();
@@ -148,7 +163,7 @@ function createNoteListItem(note) {
   const delBtn = document.createElement('button');
   delBtn.className = 'btn-icon delete';
   delBtn.title = 'Eliminar nota';
-  delBtn.innerHTML = `<svg class="yoshi-svg small"><use href="#icon-trash"></use></svg>`;
+  delBtn.appendChild(createYoshiSVG('icon-trash'));
   delBtn.addEventListener('click', async (e) => {
     e.stopPropagation();
     if (!confirm('¿Eliminar esta nota?')) return;
@@ -190,7 +205,7 @@ async function renderNotes(filterText = '') {
     
     const emptyIcon = document.createElement('div');
     emptyIcon.style.marginBottom = '15px';
-    emptyIcon.innerHTML = `<svg class="yoshi-svg" style="width: 60px; height: 60px; margin: 0 auto;"><use href="#icon-file-draw"></use></svg>`;
+    emptyIcon.appendChild(createYoshiSVG('icon-file-draw', '60px', '60px'));
     
     const emptyText = document.createElement('p');
     emptyText.textContent = 'No se encontraron notas';
@@ -550,7 +565,9 @@ async function initLocalProfile() {
     const div = document.createElement('div');
     div.className = 'emoji-item';
     div.title = iconId.replace('icon-', '').replace('-', ' ');
-    div.innerHTML = `<svg class="yoshi-svg" style="width: 35px; height: 35px; pointer-events: none;"><use href="#${iconId}"></use></svg>`;
+    const svg = createYoshiSVG(iconId, '35px', '35px');
+    svg.style.pointerEvents = 'none';
+    div.appendChild(svg);
     div.addEventListener('click', async () => {
       currentProfile.icon = `svg:${iconId}`;
       await saveLocalProfile(currentProfile);
@@ -579,12 +596,12 @@ function updateProfileUI() {
   const profileCard = document.querySelector('.local-profile-card');
   const renderIcon = (el, icon) => {
     if (!el) return;
-    el.innerHTML = '';
+    el.textContent = '';
     
     // 1. Caso: Icono Yoshi (SVG interno) o Iconos SVG (svg:id)
     if (icon === 'yoshi' || (typeof icon === 'string' && icon.startsWith('svg:'))) {
       const id = (icon === 'yoshi') ? 'icon-yoshi-profile' : icon.split(':')[1];
-      el.innerHTML = `<svg class="yoshi-svg" style="width:100%; height:100%;"><use href="#${id}"></use></svg>`;
+      el.appendChild(createYoshiSVG(id));
     } 
     // 2. Caso: Imagen Subida (Data URL)
     else if (icon && typeof icon === 'string' && icon.startsWith('data:image')) {

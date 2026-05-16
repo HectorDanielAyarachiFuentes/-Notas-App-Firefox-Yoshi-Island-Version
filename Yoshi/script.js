@@ -24,23 +24,45 @@ const CONFIG = {
 function initApp() {
     // 1. Inyectar título y versión
     if (elements.dynamicTitle) {
-        elements.dynamicTitle.innerHTML = `${CONFIG.appName} <small style="font-size: 0.8rem; vertical-align: middle; color: #3e2723; opacity: 0.6; -webkit-text-stroke: 0;">${CONFIG.version}</small>`;
+        elements.dynamicTitle.textContent = CONFIG.appName + " ";
+        const small = document.createElement('small');
+        small.style.fontSize = "0.8rem";
+        small.style.verticalAlign = "middle";
+        small.style.color = "#3e2723";
+        small.style.opacity = "0.6";
+        small.style.webkitTextStroke = "0";
+        small.textContent = CONFIG.version;
+        elements.dynamicTitle.appendChild(small);
     }
     
+    const setSVG = (selector, iconId, className = "yoshi-svg") => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        el.textContent = ''; // Clear
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("class", className);
+        const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+        use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", `#${iconId}`);
+        // Support for modern browsers that don't need xlink
+        use.setAttribute("href", `#${iconId}`);
+        svg.appendChild(use);
+        el.appendChild(svg);
+    };
+
     // 2. Inyectar iconos SVG en los botones principales
-    document.querySelector('#btn-save .btn-icon').innerHTML = `<svg class="yoshi-svg"><use href="#icon-cloud"></use></svg>`;
-    document.querySelector('#btn-clear .btn-icon').innerHTML = `<svg class="yoshi-svg"><use href="#icon-duster"></use></svg>`;
-    document.querySelector('#btn-ia .btn-icon').innerHTML = `<svg class="yoshi-svg"><use href="#icon-brain"></use></svg>`;
+    setSVG('#btn-save .btn-icon', 'icon-cloud');
+    setSVG('#btn-clear .btn-icon', 'icon-duster');
+    setSVG('#btn-ia .btn-icon', 'icon-brain');
 
     // 3. Iconos de herramientas superiores
-    document.querySelector('.btn-heart').innerHTML = `<svg class="yoshi-svg small-svg"><use href="#icon-heart"></use></svg>`;
-    document.querySelector('.btn-layout').innerHTML = `<svg class="yoshi-svg small-svg"><use href="#icon-layout"></use></svg>`;
-    document.querySelector('.btn-settings').innerHTML = `<svg class="yoshi-svg small-svg"><use href="#icon-settings"></use></svg>`;
+    setSVG('.btn-heart', 'icon-heart', 'yoshi-svg small-svg');
+    setSVG('.btn-layout', 'icon-layout', 'yoshi-svg small-svg');
+    setSVG('.btn-settings', 'icon-settings', 'yoshi-svg small-svg');
 
     // 4. Iconos de navegación lateral
-    document.querySelector('#nav-new .nav-icon-container').innerHTML = `<svg class="yoshi-svg"><use href="#icon-pencil-draw"></use></svg>`;
-    document.querySelector('#nav-list .nav-icon-container').innerHTML = `<svg class="yoshi-svg"><use href="#icon-file-draw"></use></svg>`;
-    document.querySelector('#nav-profile .nav-icon-container').innerHTML = `<svg class="yoshi-svg"><use href="#icon-yoshi-profile"></use></svg>`;
+    setSVG('#nav-new .nav-icon-container', 'icon-pencil-draw');
+    setSVG('#nav-list .nav-icon-container', 'icon-file-draw');
+    setSVG('#nav-profile .nav-icon-container', 'icon-yoshi-profile');
 
     // 5. Placeholders e Inyección de etiquetas de texto
     elements.titleInput.placeholder = CONFIG.placeholders.title;
