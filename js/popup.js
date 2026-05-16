@@ -130,8 +130,7 @@ function createNoteListItem(note) {
   const openBtn = document.createElement('button');
   openBtn.className = 'btn-icon';
   openBtn.title = 'Editar nota';
-  const openIconSvg = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>`, 'image/svg+xml').documentElement;
-  openBtn.appendChild(openIconSvg);
+  openBtn.innerHTML = `<svg class="yoshi-svg small"><use href="#icon-pencil-draw"></use></svg>`;
   openBtn.addEventListener('click', (e) => {
     e.stopPropagation(); 
     openNoteForEditing();
@@ -140,8 +139,7 @@ function createNoteListItem(note) {
   const delBtn = document.createElement('button');
   delBtn.className = 'btn-icon delete';
   delBtn.title = 'Eliminar nota';
-  const delIconSvg = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`, 'image/svg+xml').documentElement;
-  delBtn.appendChild(delIconSvg);
+  delBtn.innerHTML = `<svg class="yoshi-svg small"><use href="#icon-trash"></use></svg>`;
   delBtn.addEventListener('click', async (e) => {
     e.stopPropagation();
     if (!confirm('¿Eliminar esta nota?')) return;
@@ -181,15 +179,9 @@ async function renderNotes(filterText = '') {
     emptyState.style.padding = '40px';
     emptyState.style.opacity = '0.5';
     
-    const emptyIcon = new DOMParser().parseFromString(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px;">
-        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <line x1="9" y1="13" x2="15" y2="13"></line>
-        <line x1="9" y1="17" x2="15" y2="17"></line>
-        <line x1="9" y1="9" x2="10" y2="9"></line>
-      </svg>
-    `, 'image/svg+xml').documentElement;
+    const emptyIcon = document.createElement('div');
+    emptyIcon.style.marginBottom = '15px';
+    emptyIcon.innerHTML = `<svg class="yoshi-svg" style="width: 60px; height: 60px; margin: 0 auto;"><use href="#icon-file-draw"></use></svg>`;
     
     const emptyText = document.createElement('p');
     emptyText.textContent = 'No se encontraron notas';
