@@ -1006,6 +1006,78 @@ svg.hidden {
     fill: currentColor;
 }
 
+/* --- Selector de Emojis (Perfil) --- */
+.emoji-picker {
+    background: #fff;
+    border: 3px solid var(--color-border-main);
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+
+.emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    max-height: 160px;
+    overflow-y: auto;
+    padding: 10px;
+    padding-bottom: 20px; /* Espacio extra para que los iconos no choquen con el borde */
+    background: rgba(0,0,0,0.02);
+    border-radius: 10px;
+    border: 2px dashed rgba(62, 39, 35, 0.1);
+    position: relative;
+}
+
+.emoji-item {
+    font-size: 1.6rem; /* Reducido ligeramente para evitar desbordes */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    border-radius: 8px;
+    padding: 5px;
+    overflow: hidden; /* Evita que el emoji sobresalga de su celda */
+}
+
+.emoji-item:hover {
+    background: var(--color-paper);
+    transform: scale(1.2) rotate(5deg);
+}
+
+.upload-profile-img-btn {
+    width: 100%;
+    padding: 10px;
+    background: #f0f0f0;
+    border: 3px solid var(--color-border-main);
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: var(--font-title);
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    box-shadow: 2px 2px 0 var(--color-border-main);
+    color: var(--color-border-main);
+    position: relative;
+    z-index: 5; /* Asegura estar sobre el grid si hay solapamiento */
+}
+
+.upload-profile-img-btn:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.upload-profile-img-btn:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0 var(--color-border-main);
+}
+
 /* --- Tarjeta Informativa (Perfil) --- */
 .info-card {
     background: rgba(255, 255, 255, 0.4);

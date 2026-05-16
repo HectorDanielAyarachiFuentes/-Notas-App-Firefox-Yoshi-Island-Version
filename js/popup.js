@@ -1,4 +1,4 @@
-﻿import browserAPI from './browser-api.js';
+import browserAPI from './browser-api.js';
 import {
   getNotes, saveNotes, getLocalProfile, saveLocalProfile
 } from './storage-manager.js';
@@ -616,8 +616,8 @@ localNameInput.addEventListener('keypress', (e) => {
 
 localIconTrigger.addEventListener('click', (e) => {
   e.stopPropagation();
-  const isHidden = emojiPicker.style.display === 'none';
-  emojiPicker.style.display = isHidden ? 'block' : 'none';
+  const isHidden = emojiPicker.style.display === 'none' || emojiPicker.style.display === '';
+  emojiPicker.style.display = isHidden ? 'flex' : 'none';
 });
 
 if (uploadImgBtn && profileImgInput) {
