@@ -3,7 +3,7 @@
     --color-bg-main: #a2d2ff; /* Celeste suave estilo Yoshi */
     --color-app-bg: #d4ae83; /* Color tan/beige del marco */
     --color-paper: #f9f1e3; /* Color del papel interior */
-    --color-border-main: #3e2723; /* Borde marrón oscuro */
+    --color-border-main: #3e2723; /* Borde marrÃ³n oscuro */
     --color-stitch: rgba(62, 39, 35, 0.3);
     
     /* Colores de Botones */
@@ -42,7 +42,7 @@ body {
     background-color: var(--color-app-bg);
 }
 
-/* En modo pestaña, queremos que la app se vea como un cuaderno grande pero no infinitamente ancho */
+/* En modo pestaÃ±a, queremos que la app se vea como un cuaderno grande pero no infinitamente ancho */
 @media (min-width: 800px) {
     body {
         justify-content: flex-start;
@@ -83,7 +83,7 @@ body {
     }
 }
 
-/* --- Fondo Dinámico --- */
+/* --- Fondo DinÃ¡mico --- */
 .dynamic-background {
     position: fixed;
     top: 0;
@@ -122,7 +122,7 @@ body {
     border: none;
     border-radius: 0;
     transition: all 0.3s ease;
-    /* Efecto de "Crayón" y "Mal Pintado" */
+    /* Efecto de "CrayÃ³n" y "Mal Pintado" */
     background-image: 
         radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 40%),
         radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 30%),
@@ -175,7 +175,7 @@ body {
     z-index: 10;
 }
 
-/* Pestañas (Panels) */
+/* PestaÃ±as (Panels) */
 .tab-panel {
     display: none;
     flex-direction: column;
@@ -210,7 +210,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 5px;
-    position: relative; /* Para posicionar la versión */
+    position: relative; /* Para posicionar la versiÃ³n */
 }
 
 .app-version-badge {
@@ -230,7 +230,7 @@ body {
 
 .dynamic-app-title {
     font-family: var(--font-title);
-    font-size: 2rem; /* Un poco más pequeño para que respire */
+    font-size: 2rem; /* Un poco mÃ¡s pequeÃ±o para que respire */
     color: #8d5d36;
     text-shadow: 1px 1px 0px #fff;
     -webkit-text-stroke: 1px var(--color-border-main);
@@ -293,7 +293,7 @@ body {
     padding: 12px 20px;
     font-size: 1.5rem;
     font-family: var(--font-main);
-    font-weight: 600; /* Un poco más de peso */
+    font-weight: 600; /* Un poco mÃ¡s de peso */
     color: var(--color-border-main);
     outline: none;
 }
@@ -428,7 +428,7 @@ body {
     align-items: center;
 }
 
-/* Información de Usuario en Sidebar */
+/* InformaciÃ³n de Usuario en Sidebar */
 .sidebar-user-info {
     display: flex;
     flex-direction: column;
@@ -530,7 +530,7 @@ body {
 
 .tab-button span {
     font-family: var(--font-title);
-    font-size: 1.1rem; /* Un poco más grande para legibilidad */
+    font-size: 1.1rem; /* Un poco mÃ¡s grande para legibilidad */
     font-weight: bold;
 }
 
@@ -547,6 +547,14 @@ body {
     margin-bottom: 15px;
 }
 
+.history-container,
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
 #search-input {
     width: 100%;
     padding: 12px 20px;
@@ -557,11 +565,42 @@ body {
     outline: none;
 }
 
-#notesList {
+#notesList,
+.profile-container {
     list-style: none;
     flex-grow: 1;
     overflow-y: auto;
     padding-right: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #8d5d36 rgba(141, 93, 54, 0.1);
+}
+
+/* Scrollbar Personalizado para Chrome/Safari/Edge */
+#notesList::-webkit-scrollbar,
+.profile-container::-webkit-scrollbar,
+#emoji-grid::-webkit-scrollbar {
+    width: 10px;
+}
+
+#notesList::-webkit-scrollbar-track,
+.profile-container::-webkit-scrollbar-track,
+#emoji-grid::-webkit-scrollbar-track {
+    background: rgba(141, 93, 54, 0.05);
+    border-radius: 10px;
+}
+
+#notesList::-webkit-scrollbar-thumb,
+.profile-container::-webkit-scrollbar-thumb,
+#emoji-grid::-webkit-scrollbar-thumb {
+    background: #8d5d36;
+    border: 2px solid var(--color-paper);
+    border-radius: 10px;
+}
+
+#notesList::-webkit-scrollbar-thumb:hover,
+.profile-container::-webkit-scrollbar-thumb:hover,
+#emoji-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--color-border-main);
 }
 
 .noteItem {
@@ -574,7 +613,7 @@ body {
     transition: all 0.2s;
     box-shadow: 4px 4px 0 var(--color-border-main);
     filter: url(#hand-drawn-soft);
-    height: 140px; /* Tamaño unificado para armonía visual */
+    height: 140px; /* TamaÃ±o unificado para armonÃ­a visual */
     display: flex;
     flex-direction: column;
     position: relative;
@@ -658,7 +697,7 @@ svg.hidden {
     height: 100%;
     display: block;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: url(#hand-drawn-soft); /* Ondulación tipo dibujo a mano más estable */
+    filter: url(#hand-drawn-soft); /* OndulaciÃ³n tipo dibujo a mano mÃ¡s estable */
 }
 
 .yoshi-svg path, .yoshi-svg circle, .yoshi-svg ellipse, .yoshi-svg rect {
@@ -678,7 +717,7 @@ svg.hidden {
     transform: scale(1.1) rotate(5deg);
 }
 
-/* --- Media Queries para Ventanas Pequeñas --- */
+/* --- Media Queries para Ventanas PequeÃ±as --- */
 @media (max-width: 500px) {
     .container {
         padding: 8px;
@@ -734,7 +773,7 @@ svg.hidden {
     background-image: url('https://www.transparenttextures.com/patterns/kraft-paper.png');
     border: 5px solid var(--color-border-main);
     border-radius: 30px;
-    padding: 15px 20px 25px 20px; /* Más padding abajo para evitar cortes */
+    padding: 15px 20px 25px 20px; /* MÃ¡s padding abajo para evitar cortes */
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     z-index: 2000;
     filter: url(#hand-drawn-soft);
@@ -1015,7 +1054,7 @@ svg.hidden {
     line-height: 1.4;
 }
 
-/* --- Modo de Legibilidad Est�ndar --- */
+/* --- Modo de Legibilidad Estándar --- */
 body.standard-mode {
     --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
     --font-title: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
