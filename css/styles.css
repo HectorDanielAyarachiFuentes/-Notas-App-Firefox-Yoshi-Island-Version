@@ -31,6 +31,7 @@ html, body {
     padding: 0;
     overflow: hidden;
     background-color: var(--color-app-bg);
+    padding: 0;
 }
 
 body {
@@ -71,9 +72,18 @@ body {
     height: 100%;
     gap: 15px;
     position: relative;
-    filter: url(#hand-drawn-soft); /* Un toque más suave para todo el contenedor */
+    filter: url(#hand-drawn); 
     border: none;
-    box-shadow: none;
+    border-radius: 0;
+    /* Efecto de "Crayón" y "Mal Pintado" */
+    background-color: var(--color-app-bg);
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 30%),
+        radial-gradient(circle at 50% 80%, rgba(0,0,0,0.05) 0%, transparent 50%),
+        url('https://www.transparenttextures.com/patterns/kraft-paper.png'),
+        url('https://www.transparenttextures.com/patterns/rough-paper.png');
+    background-blend-mode: soft-light, overlay, multiply, normal, multiply;
 }
 
 .main-layout {
@@ -85,17 +95,26 @@ body {
 
 /* Panel del Cuaderno (Tab Content) */
 .tab-content {
-    background-color: var(--color-paper);
+    background-color: transparent;
     flex: 1;
-    border-radius: 35px;
-    border: 4px solid #c4a484;
     padding: 22px;
     display: flex;
     flex-direction: column;
     position: relative;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
     overflow: hidden;
-    filter: url(#hand-drawn-soft); /* El papel se ve sutilmente ondulado, no marea */
+    z-index: 1;
+}
+
+.tab-content::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--color-paper);
+    border-radius: 45px 35px 50px 40px;
+    border: 4px solid #c4a484;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+    filter: url(#hand-drawn);
+    z-index: -1;
 }
 
 .tab-content::before {
@@ -164,16 +183,29 @@ body {
 
 /* Cajas de Entrada con Costura */
 .input-group {
-    background: #fff;
-    border: 5px solid var(--color-border-main);
-    border-radius: 25px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
     position: relative;
-    box-shadow: 2px 4px 0px var(--color-border-main);
+    box-shadow: none;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: url(#hand-drawn-soft); /* Las cajas de texto son menos irregulares para mejor lectura */
+    z-index: 1;
 }
 
-.input-group:focus-within {
+.input-group::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #fff;
+    border: 5px solid var(--color-border-main);
+    border-radius: 20px 25px 15px 30px;
+    box-shadow: 2px 4px 0px var(--color-border-main);
+    filter: url(#hand-drawn-soft);
+    z-index: -1;
+    transition: all 0.3s;
+}
+
+.input-group:focus-within::before {
     transform: scale(1.02);
     box-shadow: 4px 8px 0px var(--color-border-main);
 }
@@ -245,37 +277,61 @@ body {
 
 .editor-actions button {
     flex: 1;
-    height: 95px; /* Aumentado significativamente para evitar cortes */
-    border: 5px solid var(--color-border-main);
-    border-radius: 20px;
+    height: 95px;
+    border: none;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0px; /* Reducido para ganar espacio vertical */
+    gap: 0px;
     padding: 5px;
     transition: all 0.1s;
     font-family: var(--font-title);
     font-weight: bold;
-    font-size: 1rem; /* Ligeramente más pequeño para mejor balance */
+    font-size: 1rem;
     line-height: 1.2;
     color: var(--color-border-main);
-    background: #fff;
-    filter: url(#hand-drawn-soft); /* Botones legibles pero con forma orgánica */
+    background: transparent;
+    position: relative;
+    z-index: 1;
 }
 
-#saveBtn {
+.editor-actions button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #fff;
+    border: 5px solid var(--color-border-main);
+    border-radius: 15px 25px 12px 20px;
+    filter: url(#hand-drawn);
+    z-index: -1;
+    transition: all 0.1s;
+}
+
+.editor-actions button:nth-child(1) { transform: rotate(-1.5deg); }
+.editor-actions button:nth-child(2) { transform: rotate(1.5deg); }
+.editor-actions button:nth-child(3) { transform: rotate(-0.5deg); }
+
+.editor-actions button:nth-child(even) {
+    transform: rotate(1.5deg); /* Alternancia en el desalineado */
+}
+
+.editor-actions button:nth-child(3) {
+    transform: rotate(-0.5deg) translateY(-2px);
+}
+
+#saveBtn::before {
     background-color: var(--color-btn-blue);
     box-shadow: 0 8px 0 var(--color-border-main);
 }
 
-#newBtn {
+#newBtn::before {
     background-color: var(--color-btn-orange);
     box-shadow: 0 8px 0 var(--color-border-main);
 }
 
-#ocr-btn {
+#ocr-btn::before {
     background-color: var(--color-btn-purple);
     box-shadow: 0 8px 0 var(--color-border-main);
 }
@@ -284,7 +340,7 @@ body {
     transform: translateY(-4px);
 }
 
-.editor-actions button:active {
+.editor-actions button:active::before {
     transform: translateY(4px);
     box-shadow: 0 4px 0 var(--color-border-main);
 }
@@ -317,7 +373,9 @@ body {
     cursor: pointer;
     box-shadow: 2px 2px 0 var(--color-border-main);
     transition: all 0.2s;
-    filter: url(#hand-drawn-soft);
+    filter: url(#hand-drawn);
+    border-radius: 12px 18px 10px 15px;
+    transform: rotate(2deg);
 }
 
 .btn-icon:hover {
@@ -366,7 +424,8 @@ body {
 }
 
 .tab-button span {
-    font-size: 0.9rem;
+    font-family: var(--font-title);
+    font-size: 1.1rem; /* Un poco más grande para legibilidad */
     font-weight: bold;
 }
 
@@ -508,7 +567,7 @@ svg.hidden {
     }
     
     .tab-button span {
-        font-size: 0.75rem;
+        font-size: 0.85rem;
     }
     
     .dynamic-app-title {

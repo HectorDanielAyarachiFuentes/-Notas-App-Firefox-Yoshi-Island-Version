@@ -243,12 +243,12 @@
         <!-- Filtro de Ondulación (Mueve las líneas) -->
         <filter id="hand-drawn" x="-10%" y="-10%" width="120%" height="120%">
             <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" />
         </filter>
         <!-- Filtro Suave para Texto (Mejor legibilidad) -->
         <filter id="hand-drawn-soft" x="-5%" y="-5%" width="110%" height="110%">
             <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
         </filter>
         <!-- Filtro de Textura de Crayón/Lápiz -->
         <filter id="crayon-texture">
