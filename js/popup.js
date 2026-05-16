@@ -578,23 +578,33 @@ async function initLocalProfile() {
 function updateProfileUI() {
   const profileCard = document.querySelector('.local-profile-card');
   const renderIcon = (el, icon) => {
+    if (!el) return;
     el.innerHTML = '';
-    if (icon === 'yoshi' || (icon && icon.startsWith('svg:'))) {
+    
+    // 1. Caso: Icono Yoshi (SVG interno) o Iconos SVG (svg:id)
+    if (icon === 'yoshi' || (typeof icon === 'string' && icon.startsWith('svg:'))) {
       const id = (icon === 'yoshi') ? 'icon-yoshi-profile' : icon.split(':')[1];
-      el.innerHTML = `<svg class="yoshi-svg"><use href="#${id}"></use></svg>`;
-    } else if (icon && icon.startsWith('data:image')) {
+      el.innerHTML = `<svg class="yoshi-svg" style="width:100%; height:100%;"><use href="#${id}"></use></svg>`;
+    } 
+    // 2. Caso: Imagen Subida (Data URL)
+    else if (icon && typeof icon === 'string' && icon.startsWith('data:image')) {
       const img = document.createElement('img');
       img.src = icon;
       img.style.width = '100%';
       img.style.height = '100%';
       img.style.objectFit = 'cover';
       img.style.display = 'block';
-      img.style.borderRadius = '12px';
+      img.style.borderRadius = 'inherit'; // Sigue el borde del contenedor
       el.appendChild(img);
-    } else {
+    } 
+    // 3. Caso: Emoji (Texto)
+    else {
       const span = document.createElement('span');
-      span.style.fontSize = '2.5rem';
+      // Ajustar tamaño según el contenedor
+      const isSidebar = el.id === 'sidebar-user-icon';
+      span.style.fontSize = isSidebar ? '2rem' : '2.8rem';
       span.textContent = icon || '📝';
+      span.style.lineHeight = '1';
       el.appendChild(span);
     }
   };
@@ -606,10 +616,10 @@ function updateProfileUI() {
   localProfileName.textContent = currentProfile.name;
   sidebarUserName.textContent = currentProfile.name;
 
-  // Aplicar fondo a la tarjeta completa si es imagen
+  // Aplicar fondo a la tarjeta si es una imagen (opcional, con mejor contraste)
   if (profileCard) {
-    if (currentProfile.icon && currentProfile.icon.startsWith('data:image')) {
-      profileCard.style.backgroundImage = `linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), url(${currentProfile.icon})`;
+    if (currentProfile.icon && typeof currentProfile.icon === 'string' && currentProfile.icon.startsWith('data:image')) {
+      profileCard.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)), url(${currentProfile.icon})`;
       profileCard.style.backgroundSize = 'cover';
       profileCard.style.backgroundPosition = 'center';
     } else {
@@ -657,29 +667,32 @@ if (uploadImgBtn && profileImgInput) {
       img.onload = async () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        const size = 160; 
+        const size = 200; // Un poco más de resolución
         canvas.width = size;
         canvas.height = size;
 
-        // Ajustar imagen completa (contain) en lugar de recortar
         const aspect = img.width / img.height;
-        let dw = size;
-        let dh = size;
-        let dx = 0;
-        let dy = 0;
+        let dw, dh, dx, dy;
 
         if (aspect > 1) {
-          dh = size / aspect;
-          dy = (size - dh) / 2;
-        } else {
           dw = size * aspect;
-          dx = (size - dw) / 2;
+          dh = size;
+          dx = -(dw - size) / 2;
+          dy = 0;
+        } else {
+          dw = size;
+          dh = size / aspect;
+          dx = 0;
+          dy = -(dh - size) / 2;
         }
 
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, size, size);
         ctx.drawImage(img, dx, dy, dw, dh);
-        const dataUrl = canvas.toDataURL('image/webp', 0.85);
-
+        
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.8); // JPEG suele ser más compatible y ligero
         currentProfile.icon = dataUrl;
+        
         await saveLocalProfile(currentProfile);
         updateProfileUI();
         emojiPicker.style.display = 'none';
