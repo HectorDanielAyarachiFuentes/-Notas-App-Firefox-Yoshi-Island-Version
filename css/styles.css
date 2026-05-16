@@ -1014,3 +1014,38 @@ svg.hidden {
     border-left: 5px solid var(--color-btn-orange);
     line-height: 1.4;
 }
+
+/* --- Modo de Legibilidad Estándar --- */
+body.standard-mode {
+    --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    --font-title: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+body.standard-mode * {
+    filter: none !important;
+    text-shadow: none !important;
+}
+
+body.standard-mode .note-title,
+body.standard-mode .note-content,
+body.standard-mode input,
+body.standard-mode textarea {
+    font-family: var(--font-main) !important;
+    font-weight: 500;
+}
+
+body.standard-mode .sidebar-user-name,
+body.standard-mode h1,
+body.standard-mode h2,
+body.standard-mode h3 {
+    font-family: var(--font-title) !important;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+body.standard-mode .info-quote {
+    font-style: italic;
+    border-left: 4px solid var(--color-border-main);
+    padding-left: 10px;
+    background: rgba(0,0,0,0.05);
+}

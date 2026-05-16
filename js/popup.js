@@ -1,4 +1,4 @@
-import browserAPI from './browser-api.js';
+ï»¿import browserAPI from './browser-api.js';
 import {
   getNotes, saveNotes, getLocalProfile, saveLocalProfile
 } from './storage-manager.js';
@@ -31,6 +31,7 @@ const settingsDropdown = document.getElementById('settings-dropdown');
 const versionSpan = document.getElementById('extension-version');
 const themeSelector = document.getElementById('theme-selector');
 const psmSelector = document.getElementById('psm-selector');
+const fontSelector = document.getElementById('font-selector');
 const importFileInput = document.getElementById('import-file-input');
 const pinBtn = document.getElementById('pin-btn');
 const ocrBtn = document.getElementById('ocr-btn');
@@ -388,6 +389,26 @@ if (psmSelector) {
   });
 }
 
+if (fontSelector) {
+  fontSelector.addEventListener('change', (e) => {
+    const selectedFont = e.target.value;
+    applyFont(selectedFont);
+    browserAPI.storage.sync.set({ fontStyle: selectedFont }, () => {
+      if (browserAPI.runtime.lastError) {
+        browserAPI.storage.local.set({ fontStyle: selectedFont });
+      }
+    });
+  });
+}
+
+function applyFont(font) {
+  if (font === 'standard') {
+    document.body.classList.add('standard-mode');
+  } else {
+    document.body.classList.remove('standard-mode');
+  }
+}
+
 function applyTheme(theme) {
   const docEl = document.documentElement;
   docEl.classList.remove('theme-light', 'theme-dark', 'theme-system');
@@ -658,9 +679,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   await initLocalProfile();
   await renderNotes();
   
-  const { theme, psmMode } = await browserAPI.storage.sync.get(['theme', 'psmMode']);
+  const { theme, psmMode, fontStyle } = await browserAPI.storage.sync.get(['theme', 'psmMode', 'fontStyle']);
   if (theme) applyTheme(theme);
   if (psmMode && psmSelector) psmSelector.value = psmMode;
+  if (fontStyle) {
+    applyFont(fontStyle);
+    if (fontSelector) fontSelector.value = fontStyle;
+  }
   
   const { editorDraft } = await browserAPI.storage.local.get('editorDraft');
   if (editorDraft && !editingId) {
@@ -682,7 +707,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Interacción con Dulce (¡Guao guao!)
+  // Interacciï¿½n con Dulce (ï¿½Guao guao!)
   const dogInteractive = document.getElementById('dog-interactive');
   const dogBubble = document.getElementById('dog-bubble');
   
