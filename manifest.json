@@ -4,22 +4,23 @@
   "version": "1.0.0",
   "description": "Gestor de notas local con estética artesanal inspirada en Yoshi's Island, con OCR integrado y privacidad total.",
   "author": "Hector Daniel Ayarachi Fuentes",
-
   "browser_specific_settings": {
     "gecko": {
       "id": "yoshi-notes-pro@ayarachi.dev",
-      "strict_min_version": "112.0",
+      "strict_min_version": "142.0",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [
+          "none"
+        ]
       }
     }
   },
-
   "background": {
-    "scripts": ["js/background.js"],
+    "scripts": [
+      "js/background.js"
+    ],
     "type": "module"
   },
-
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -28,18 +29,15 @@
       "128": "icons/icon-128.png"
     }
   },
-
   "sidebar_action": {
     "default_panel": "popup.html",
     "default_title": "Yoshi Notes Pro"
   },
-
   "icons": {
     "16": "icons/icon-16.png",
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
   },
-
   "permissions": [
     "storage",
     "downloads",
@@ -48,19 +46,20 @@
     "notifications",
     "contextMenus"
   ],
-
   "host_permissions": [
     "<all_urls>"
   ],
-
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["js/clipboard-monitor.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/clipboard-monitor.js"
+      ],
       "all_frames": true
     }
   ],
-
   "commands": {
     "_execute_sidebar_action": {
       "suggested_key": {
@@ -69,11 +68,9 @@
       "description": "Abrir Yoshi Notes Pro en el panel lateral"
     }
   },
-
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
   },
-
   "web_accessible_resources": [
     {
       "resources": [
@@ -90,7 +87,9 @@
         "OCR/tessdata_best/*",
         "OCR/images/*"
       ],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }
