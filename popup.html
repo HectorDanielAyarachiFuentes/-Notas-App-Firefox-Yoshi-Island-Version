@@ -245,6 +245,11 @@
             <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
             <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
         </filter>
+        <!-- Filtro Suave para Texto (Mejor legibilidad) -->
+        <filter id="hand-drawn-soft" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" />
+        </filter>
         <!-- Filtro de Textura de Crayón/Lápiz -->
         <filter id="crayon-texture">
             <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />

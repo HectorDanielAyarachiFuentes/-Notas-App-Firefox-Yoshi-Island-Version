@@ -71,7 +71,7 @@ body {
     height: 100%;
     gap: 15px;
     position: relative;
-    filter: url(#hand-drawn); /* Todo el cuaderno se ve movido */
+    filter: url(#hand-drawn-soft); /* Un toque más suave para todo el contenedor */
     border: none;
     box-shadow: none;
 }
@@ -95,7 +95,7 @@ body {
     position: relative;
     box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
     overflow: hidden;
-    filter: url(#hand-drawn); /* El papel se ve ondulado */
+    filter: url(#hand-drawn-soft); /* El papel se ve sutilmente ondulado, no marea */
 }
 
 .tab-content::before {
@@ -148,7 +148,7 @@ body {
     color: #8d5d36;
     text-shadow: 1px 1px 0px #fff;
     -webkit-text-stroke: 1px var(--color-border-main);
-    line-height: 1;
+    line-height: 1.2;
     margin: 0;
 }
 
@@ -170,7 +170,7 @@ body {
     position: relative;
     box-shadow: 2px 4px 0px var(--color-border-main);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: url(#hand-drawn); /* Las cajas de texto son irregulares */
+    filter: url(#hand-drawn-soft); /* Las cajas de texto son menos irregulares para mejor lectura */
 }
 
 .input-group:focus-within {
@@ -194,8 +194,14 @@ body {
     padding: 12px 20px;
     font-size: 1.5rem;
     font-family: var(--font-main);
+    font-weight: 600; /* Un poco más de peso */
     color: var(--color-border-main);
     outline: none;
+}
+
+#title::placeholder {
+    color: rgba(62, 39, 35, 0.4);
+    font-weight: 400;
 }
 
 .textarea-container {
@@ -212,9 +218,15 @@ body {
     padding: 15px 20px;
     font-size: 1.2rem;
     font-family: var(--font-main);
+    font-weight: 500;
     color: var(--color-border-main);
+    line-height: 1.4;
     resize: none;
     outline: none;
+}
+
+#content::placeholder {
+    color: rgba(62, 39, 35, 0.4);
 }
 
 .char-counter {
@@ -233,7 +245,7 @@ body {
 
 .editor-actions button {
     flex: 1;
-    height: 70px;
+    height: 95px; /* Aumentado significativamente para evitar cortes */
     border: 5px solid var(--color-border-main);
     border-radius: 20px;
     cursor: pointer;
@@ -241,14 +253,16 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 0px; /* Reducido para ganar espacio vertical */
+    padding: 5px;
     transition: all 0.1s;
     font-family: var(--font-title);
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1rem; /* Ligeramente más pequeño para mejor balance */
+    line-height: 1.2;
     color: var(--color-border-main);
     background: #fff;
-    filter: url(#hand-drawn); /* Los botones son bloques de colores amorfos */
+    filter: url(#hand-drawn-soft); /* Botones legibles pero con forma orgánica */
 }
 
 #saveBtn {
@@ -303,7 +317,7 @@ body {
     cursor: pointer;
     box-shadow: 2px 2px 0 var(--color-border-main);
     transition: all 0.2s;
-    filter: url(#hand-drawn);
+    filter: url(#hand-drawn-soft);
 }
 
 .btn-icon:hover {
@@ -343,7 +357,7 @@ body {
     box-shadow: 3px 4px 0 var(--color-border-main);
     transition: all 0.2s;
     font-size: 1.8rem;
-    filter: url(#hand-drawn);
+    filter: url(#hand-drawn-soft);
 }
 
 .tab-button.active .icon-container {
@@ -395,6 +409,7 @@ body {
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: 3px 3px 0 var(--color-border-main);
+    filter: url(#hand-drawn-soft);
 }
 
 .noteItem:hover {
@@ -452,7 +467,7 @@ svg.hidden {
     height: 100%;
     display: block;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: url(#hand-drawn); /* Ondulación tipo dibujo a mano */
+    filter: url(#hand-drawn-soft); /* Ondulación tipo dibujo a mano más estable */
 }
 
 .yoshi-svg path, .yoshi-svg circle, .yoshi-svg ellipse, .yoshi-svg rect {
@@ -509,8 +524,12 @@ svg.hidden {
     }
     
     .editor-actions button {
-        height: 55px;
+        height: 80px;
         font-size: 0.9rem;
+    }
+    .editor-actions button .btn-icon {
+        width: 40px;
+        height: 40px;
     }
 }
 
