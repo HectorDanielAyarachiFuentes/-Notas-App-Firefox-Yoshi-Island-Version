@@ -543,7 +543,8 @@ body {
     height: 100%;
 }
 
-.history-header {
+.history-header,
+.profile-header {
     margin-bottom: 15px;
 }
 
@@ -566,31 +567,32 @@ body {
 }
 
 #notesList,
-.profile-container {
+.profile-scroll-area {
     list-style: none;
     flex-grow: 1;
     overflow-y: auto;
     padding-right: 10px;
+    padding-bottom: 30px; /* Espacio extra al final para que no choque con el borde */
     scrollbar-width: thin;
-    scrollbar-color: #8d5d36 rgba(141, 93, 54, 0.1);
+    scrollbar-color: #8d5d36 rgba(141, 93, 54, 0.2); /* Track más visible */
 }
 
 /* Scrollbar Personalizado para Chrome/Safari/Edge */
 #notesList::-webkit-scrollbar,
-.profile-container::-webkit-scrollbar,
+.profile-scroll-area::-webkit-scrollbar,
 #emoji-grid::-webkit-scrollbar {
     width: 10px;
 }
 
 #notesList::-webkit-scrollbar-track,
-.profile-container::-webkit-scrollbar-track,
+.profile-scroll-area::-webkit-scrollbar-track,
 #emoji-grid::-webkit-scrollbar-track {
-    background: rgba(141, 93, 54, 0.05);
+    background: rgba(141, 93, 54, 0.15); /* Track más visible */
     border-radius: 10px;
 }
 
 #notesList::-webkit-scrollbar-thumb,
-.profile-container::-webkit-scrollbar-thumb,
+.profile-scroll-area::-webkit-scrollbar-thumb,
 #emoji-grid::-webkit-scrollbar-thumb {
     background: #8d5d36;
     border: 2px solid var(--color-paper);
