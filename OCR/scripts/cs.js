@@ -22,7 +22,7 @@ if (typeof browser === "undefined") {
 	let imageParseData = null;
 	let imagePath = null;
 	var MAX_ZINDEX = 2147483646;
-	var WIDGETBOTTOM = -8;
+	var WIDGETBOTTOM = 10;
 	var SELECTOR_BORDER = 2;
 	let messageDialogHtml;
 	var OCR_LIMIT = {
@@ -1289,27 +1289,9 @@ if (typeof browser === "undefined") {
 			Mask.hide();
 			// show the widget
 			_setZIndex();
-			$dialog = $body.find('.ocrext-wrapper');
-			/*
-			https://github.com/teamdocs/copyfish2020/issues/9
-			firefox causing issue and applying css and show at same time, show should be happend when css is applied completely so
-			adding animate instead of css jquery method
-			$dialog
-				.css({
-					// zIndex: MAX_ZINDEX,
-					// opacity: 0,
-					bottom: -$dialog.height()
-				})
-				.show();
-				*/
-			$dialog
-				.animate({
-					// zIndex: MAX_ZINDEX,
-					// opacity: 0,
-					bottom: -$dialog.height()
-				}, 0, function () {
-					$dialog.show();
-				});
+			var $dialog = $body.find('.ocrext-wrapper');
+			$dialog.show();
+			OCRTranslator.slideUp();
 			// initiate image capture
 			_captureImageOntoCanvas().done(function () {
 				_processOCRTranslate();
@@ -2164,12 +2146,11 @@ if (typeof browser === "undefined") {
 		},
 		slideDown: function () {
 			var $dialog = $('.ocrext-wrapper');
-			$dialog.animate({
-				bottom: -$dialog.height()
-			});
+			var h = $dialog.outerHeight() || 500;
+			$dialog.css('bottom', (-h - 100) + 'px');
 		},
 		slideUp: function () {
-			$('.ocrext-wrapper').css('bottom', WIDGETBOTTOM);
+			$('.ocrext-wrapper').css('bottom', '10px');
 		},
 		setOverlayInformation: function (overlay, imgDataURI) {
 			this._overlay = overlay;
