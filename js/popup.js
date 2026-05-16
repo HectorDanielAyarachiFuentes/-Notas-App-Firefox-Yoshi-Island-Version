@@ -681,4 +681,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
   });
+
+  // Interacción con Dulce (¡Guao guao!)
+  const dogInteractive = document.getElementById('dog-interactive');
+  const dogBubble = document.getElementById('dog-bubble');
+  
+  if (dogInteractive && dogBubble) {
+    dogInteractive.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dogBubble.classList.add('show');
+      
+      dogInteractive.style.transition = 'transform 0.2s';
+      dogInteractive.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        dogInteractive.style.transform = '';
+      }, 200);
+
+      setTimeout(() => {
+        dogBubble.classList.remove('show');
+      }, 2000);
+    });
+  }
 });

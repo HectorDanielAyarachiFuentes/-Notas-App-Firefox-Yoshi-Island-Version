@@ -883,6 +883,43 @@ svg.hidden {
     animation: floatDog 3s ease-in-out infinite;
 }
 
+.dog-speech-bubble {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: #fff;
+    border: 3px solid var(--color-border-main);
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-family: var(--font-title);
+    font-size: 0.85rem;
+    color: var(--color-border-main);
+    white-space: nowrap;
+    z-index: 100;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    filter: url(#hand-drawn-soft);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+}
+
+.dog-speech-bubble.show {
+    transform: translateX(-50%) scale(1) translateY(-5px);
+    opacity: 1;
+}
+
+.dog-speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top: 10px solid var(--color-border-main);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+}
+
 .footer-dog {
     width: 100%;
     height: 100%;
