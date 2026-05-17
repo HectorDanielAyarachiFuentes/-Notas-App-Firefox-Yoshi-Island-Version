@@ -30,7 +30,7 @@
                     <div class="editor">
                         <header class="notebook-header">
                             <h1 id="editor-title" class="dynamic-app-title">Nueva Nota</h1>
-                            <span id="extension-version" class="app-version-badge">Yoshi Notes Pro v1.0.0</span>
+                            <span id="extension-version" class="app-version-badge">Yoshi Notes Pro v1.0.1</span>
                             <div class="cloud-icon" style="font-size: 1.5rem; margin-bottom: 3px;">☁️</div>
                         </header>
 
@@ -143,55 +143,57 @@
 
                     <!-- Menú Desplegable de Ajustes (Faltaba en el HTML) -->
                     <div id="settings-dropdown" class="settings-dropdown" style="display: none;">
-                        <h3 class="dropdown-title">Ajustes</h3>
-                        <div class="settings-group-inner">
-                            <div class="setting-item">
-                                <label>Tema Visual</label>
-                                <select id="theme-selector">
-                                    <option value="system">Sistema</option>
-                                    <option value="light">Claro (Papel)</option>
-                                    <option value="dark">Oscuro (Noche)</option>
-                                </select>
-                            </div>
-                            <div class="setting-item">
-                                <label>Tipografía</label>
-                                <select id="font-selector">
-                                    <option value="yoshi">✨ Estilo Yoshi</option>
-                                    <option value="standard">📖 Estándar (Legible)</option>
-                                </select>
-                            </div>
-                            <div class="setting-item">
-                                <label>Modo OCR</label>
-                                <select id="psm-selector">
-                                    <option value="3">✨ Inteligente (IA)</option>
-                                    <option value="6">Básico (Local)</option>
-                                </select>
-                            </div>
+                        <div class="settings-dropdown-scroll">
+                            <h3 class="dropdown-title">Ajustes</h3>
+                            <div class="settings-group-inner">
+                                <div class="setting-item">
+                                    <label>Tema Visual</label>
+                                    <select id="theme-selector">
+                                        <option value="system">Sistema</option>
+                                        <option value="light">Claro (Papel)</option>
+                                        <option value="dark">Oscuro (Noche)</option>
+                                    </select>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Tipografía</label>
+                                    <select id="font-selector">
+                                        <option value="yoshi">✨ Estilo Yoshi</option>
+                                        <option value="standard">📖 Estándar (Legible)</option>
+                                    </select>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Modo OCR</label>
+                                    <select id="psm-selector">
+                                        <option value="3">✨ Inteligente (IA)</option>
+                                        <option value="6">Básico (Local)</option>
+                                    </select>
+                                </div>
 
-                            <div class="data-actions">
-                                <button id="profile-export-btn" title="Exportar Notas">
-                                    <svg class="yoshi-svg small"><use href="#icon-export"></use></svg>
-                                    <span>Exportar</span>
-                                </button>
-                                <button id="profile-import-btn" title="Importar Notas">
-                                    <svg class="yoshi-svg small"><use href="#icon-import"></use></svg>
-                                    <span>Importar</span>
-                                </button>
+                                <div class="data-actions">
+                                    <button id="profile-export-btn" title="Exportar Notas">
+                                        <svg class="yoshi-svg small"><use href="#icon-export"></use></svg>
+                                        <span>Exportar</span>
+                                    </button>
+                                    <button id="profile-import-btn" title="Importar Notas">
+                                        <svg class="yoshi-svg small"><use href="#icon-import"></use></svg>
+                                        <span>Importar</span>
+                                    </button>
+                                </div>
+                                
+                                <button id="deleteAllBtn" class="delete-all-btn">BORRAR TODO</button>
                             </div>
                             
-                            <button id="deleteAllBtn" class="delete-all-btn">BORRAR TODO</button>
-                        </div>
-                        
-                        <div class="dropdown-footer">
-                            <div class="dog-container" id="dog-interactive" style="cursor: pointer;">
-                                <img src="img/dulceflamengo.png" alt="Dulce" class="footer-dog">
-                                <div id="dog-bubble" class="dog-speech-bubble">¡Guao guao!</div>
-                            </div>
-                            <div class="developer-info">
-                                <a href="https://github.com/HectorDanielAyarachiFuentes" target="_blank" class="github-link">
-                                    <svg viewBox="0 0 24 24" class="github-icon-svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.416-4.041-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                    <span>@HectorDaniel</span>
-                                </a>
+                            <div class="dropdown-footer">
+                                <div class="dog-container" id="dog-interactive" style="cursor: pointer;">
+                                    <img src="img/dulceflamengo.png" alt="Dulce" class="footer-dog">
+                                    <div id="dog-bubble" class="dog-speech-bubble">¡Guao guao!</div>
+                                </div>
+                                <div class="developer-info">
+                                    <a href="https://github.com/HectorDanielAyarachiFuentes" target="_blank" class="github-link">
+                                        <svg viewBox="0 0 24 24" class="github-icon-svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.416-4.041-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                        <span>@HectorDaniel</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

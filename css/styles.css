@@ -775,11 +775,33 @@ svg.hidden {
     background-image: url('https://www.transparenttextures.com/patterns/kraft-paper.png');
     border: 5px solid var(--color-border-main);
     border-radius: 30px;
-    padding: 15px 20px 25px 20px; /* MÃ¡s padding abajo para evitar cortes */
+    padding: 12px 14px 12px 14px; /* Optimizado para ganar espacio vertical */
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     z-index: 2000;
     filter: url(#hand-drawn-soft);
     animation: slideInLeft 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.settings-dropdown-scroll {
+    max-height: calc(100vh - 120px); /* Límite de altura adaptativo */
+    overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: #8d5d36 rgba(141, 93, 54, 0.1);
+}
+
+/* Scrollbar personalizado para el menú de ajustes */
+.settings-dropdown-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+.settings-dropdown-scroll::-webkit-scrollbar-track {
+    background: rgba(141, 93, 54, 0.1);
+    border-radius: 10px;
+}
+.settings-dropdown-scroll::-webkit-scrollbar-thumb {
+    background: #8d5d36;
+    border: 2px solid var(--color-paper);
+    border-radius: 10px;
 }
 
 @keyframes slideInLeft {
@@ -802,9 +824,9 @@ svg.hidden {
     font-size: 1.8rem;
     color: #8d5d36;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     border-bottom: 3px dashed var(--color-stitch);
-    padding-bottom: 5px;
+    padding-bottom: 3px;
 }
 
 .settings-group-inner {
@@ -814,20 +836,20 @@ svg.hidden {
 }
 
 .setting-item {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .setting-item label {
     display: block;
     font-weight: bold;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     color: var(--color-border-main);
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 .setting-item select {
     width: 100%;
-    padding: 8px;
+    padding: 6px;
     border: 3px solid var(--color-border-main);
     border-radius: 12px;
     font-family: var(--font-main);
@@ -839,7 +861,7 @@ svg.hidden {
 .data-actions {
     display: flex;
     gap: 8px;
-    margin-top: 8px;
+    margin-top: 6px;
 }
 
 .data-actions button {
@@ -848,8 +870,8 @@ svg.hidden {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-    padding: 8px 5px;
+    gap: 2px;
+    padding: 6px 4px;
     background: #fff;
     border: 3px solid var(--color-border-main);
     border-radius: 15px;
@@ -867,14 +889,14 @@ svg.hidden {
 }
 
 .data-actions button .yoshi-svg {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
 }
 
 .delete-all-btn {
     width: 100%;
-    margin-top: 12px;
-    padding: 10px;
+    margin-top: 8px;
+    padding: 8px;
     background: #ff7675;
     border: 4px solid var(--color-border-main);
     border-radius: 15px;
@@ -882,7 +904,7 @@ svg.hidden {
     font-family: var(--font-title);
     font-weight: bold;
     color: #fff;
-    font-size: 1rem;
+    font-size: 0.95rem;
     box-shadow: 2px 2px 0 var(--color-border-main);
     transition: all 0.2s;
 }
@@ -904,22 +926,25 @@ svg.hidden {
         top: 60px;
         width: 300px;
     }
+    .settings-dropdown-scroll {
+        max-height: calc(100vh - 150px);
+    }
 }
 
 /* --- Footer del Dropdown (Perro y GitHub) --- */
 .dropdown-footer {
-    margin-top: 12px;
-    padding-top: 8px;
+    margin-top: 8px;
+    padding-top: 6px;
     border-top: 3px dashed var(--color-stitch);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
 }
 
 .dog-container {
-    width: 70px; /* Reducido para ganar espacio vertical */
-    height: 70px;
+    width: 50px; /* Reducido para ganar espacio vertical */
+    height: 50px;
     position: relative;
     animation: floatDog 3s ease-in-out infinite;
 }
