@@ -368,7 +368,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 function cleanAndFormatWords(words) {
   if (!words || !words.length) return '';
   const cleanWords = [];
-  
+  let lastWord = null;
+
   for (let w = 0; w < words.length; w++) {
     const word = words[w];
     const conf = word.confidence || 0;
@@ -378,47 +379,81 @@ function cleanAndFormatWords(words) {
     if (!text || /^[|_~=\-\\\/\[\]{}<>]+$/.test(text)) continue;
     if (conf < 60 && /^[.,;:!?'"'`´""''«»]+$/.test(text)) continue;
     
+    let processedText = text;
+    let currentBbox = word.bbox;
+    let consumed = false;
+
     // Manejo de emojis
     if (conf < 50) {
       const emoji = detectEmoji(text, words[w+1]);
-      if (emoji) { cleanWords.push(emoji.text); if (emoji.consumed) w++; continue; }
+      if (emoji) {
+        processedText = emoji.text;
+        consumed = emoji.consumed;
+        if (consumed && w + 1 < words.length) {
+          const nextWord = words[w+1];
+          currentBbox = {
+            x0: word.bbox.x0,
+            x1: nextWord.bbox.x1,
+            y0: Math.min(word.bbox.y0, nextWord.bbox.y0),
+            y1: Math.max(word.bbox.y1, nextWord.bbox.y1)
+          };
+        }
+      }
     }
 
-    // Fusión de palabras cortadas por OCR
-    if (w + 1 < words.length) {
+    // Fusión de palabras cortadas por OCR (solo si no se detectó emoji)
+    if (processedText === text && w + 1 < words.length) {
       const fused = tryFuseWords(word, words[w+1]);
-      if (fused) { 
-        cleanWords.push(fused); 
-        w++; 
-        continue; 
+      if (fused) {
+        processedText = fused;
+        consumed = true;
+        const nextWord = words[w+1];
+        currentBbox = {
+          x0: word.bbox.x0,
+          x1: nextWord.bbox.x1,
+          y0: Math.min(word.bbox.y0, nextWord.bbox.y0),
+          y1: Math.max(word.bbox.y1, nextWord.bbox.y1)
+        };
       }
     }
 
-    // Validación de palabra
-    const isCapitalized = text.length > 0 && text[0] === text[0].toUpperCase();
-    const hasAccent = /[áéíóúÁÉÍÓÚ]/.test(text);
-    const trustThreshold = (hasAccent || isCapitalized) ? 70 : 80;
+    // Validación de palabra y corrección (solo si es palabra normal y no emoji/fusión)
+    if (processedText === text) {
+      const isCapitalized = text.length > 0 && text[0] === text[0].toUpperCase();
+      const hasAccent = /[áéíóúÁÉÍÓÚ]/.test(text);
+      const trustThreshold = (hasAccent || isCapitalized) ? 70 : 80;
 
-    let finalWord = text;
-    if (conf < trustThreshold && !isSpanishWord(text)) {
-      finalWord = autoCorrectOCRWord(text) || trySplitMergedWord(text) || text;
+      if (conf < trustThreshold && !isSpanishWord(text)) {
+        processedText = autoCorrectOCRWord(text) || trySplitMergedWord(text) || text;
+      }
     }
-    
-    cleanWords.push(finalWord);
 
-    // MANTENER FORMA: Detectar huecos horizontales (espacios múltiples o columnas)
-    if (w + 1 < words.length) {
-      const nextWord = words[w+1];
-      const gap = nextWord.bbox.x0 - word.bbox.x1;
-      const charWidth = (word.bbox.x1 - word.bbox.x0) / (text.length || 1);
+    // Agregar espaciado horizontal antes de añadir la palabra procesada
+    if (lastWord) {
+      const gap = currentBbox.x0 - lastWord.bbox.x1;
+      const charWidth = (lastWord.bbox.x1 - lastWord.bbox.x0) / (lastWord.text.length || 1);
       
-      if (gap > charWidth * 3) {
+      if (gap > charWidth * 2) {
         // Hueco grande detectado: insertar espacios proporcionales
-        const numSpaces = Math.min(10, Math.floor(gap / charWidth));
+        const numSpaces = Math.max(1, Math.min(10, Math.floor(gap / charWidth)));
         cleanWords.push(' '.repeat(numSpaces));
-      } else if (gap > charWidth * 0.5) {
-        cleanWords.push(' ');
+      } else {
+        // Por defecto, añadir un espacio entre palabras, a menos que el siguiente
+        // elemento sea un signo de puntuación de cierre (y no sea parte de un emoji)
+        const isTrailingPunc = /^[.,;:!?\)\]}]+$/.test(processedText.trim()) && !/[👎👍😎😂❤️]/.test(processedText);
+        const isLastLeadingPunc = /^[¿¡\(\[{]+$/.test(lastWord.text.trim()) && !/[👎👍😎😂❤️]/.test(lastWord.text);
+        
+        if (!isTrailingPunc && !isLastLeadingPunc) {
+          cleanWords.push(' ');
+        }
       }
+    }
+
+    cleanWords.push(processedText);
+    lastWord = { text: processedText, bbox: currentBbox };
+    
+    if (consumed) {
+      w++;
     }
   }
   return cleanWords.join('').replace(/ +$/, '');
