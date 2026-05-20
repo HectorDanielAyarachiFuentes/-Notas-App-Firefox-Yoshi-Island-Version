@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Yoshi Notes Pro",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Gestor de notas local con estética artesanal inspirada en Yoshi's Island, con OCR integrado y privacidad total.",
   "author": "Hector Daniel Ayarachi Fuentes",
   "browser_specific_settings": {
